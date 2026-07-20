@@ -483,7 +483,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
 
 @media print{
   body{ background:#fff; padding:0; }
-  .data-toolbar, .summary-bar, .tab-nav, .lang-pill, #tabLoan, #tabMoto, #tabSalary, #tabBudget{ display:none !important; }
+  .data-toolbar, .summary-bar, .tab-nav, .lang-pill, .intro-card, #tabLoan, #tabMoto, #tabSalary, #tabBudget{ display:none !important; }
   .print-only{
     display:block;
     font-family:'Inter', sans-serif;
@@ -523,6 +523,53 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
     font-family:'IBM Plex Mono', monospace;
     font-weight:600;
   }
+}
+
+.intro-card{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--brass);
+  border-radius:6px;
+  padding:16px 40px 14px 18px;
+  margin-bottom:16px;
+}
+.intro-close{
+  position:absolute;
+  top:8px;
+  right:10px;
+  background:none;
+  border:none;
+  font-size:20px;
+  line-height:1;
+  color:var(--ink-soft);
+  cursor:pointer;
+  padding:4px 8px;
+}
+.intro-close:hover{ color:var(--red-ink); }
+.intro-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px 24px;
+  margin-bottom:10px;
+}
+.intro-item{
+  font-size:12.5px;
+  line-height:1.4;
+  color:var(--ink-soft);
+}
+.intro-item strong{
+  color:var(--teal-deep);
+  font-weight:600;
+}
+.intro-example{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:var(--brass);
+  padding-top:8px;
+  border-top:1px dashed var(--paper-line);
+}
+@media (max-width:640px){
+  .intro-grid{ grid-template-columns:1fr; }
 }
 
 .data-toolbar{
@@ -663,6 +710,17 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
       <button type="button" id="langToggleBtn" class="lang-pill">🌐 EN</button>
       <div class="stamp" id="stampDate"></div>
     </div>
+  </div>
+
+  <div class="intro-card" id="introCard">
+    <button type="button" class="intro-close" id="introCloseBtn" aria-label="Κλείσιμο">×</button>
+    <div class="intro-grid">
+      <div class="intro-item"><strong data-i18n="introT1">Μισθός & Δώρα</strong><span data-i18n="introD1"> — καθαρός μισθός, φόρος ανά ηλικία, δώρα Χριστουγέννων/Πάσχα, επίδομα αδείας.</span></div>
+      <div class="intro-item"><strong data-i18n="introT2">Προϋπολογισμός</strong><span data-i18n="introD2"> — πόσο σου μένει τον μήνα, πρόταση αποταμίευσης, επενδυτικός υπολογιστής.</span></div>
+      <div class="intro-item"><strong data-i18n="introT3">Δάνειο</strong><span data-i18n="introD3"> — δόση, τόκοι, σενάρια μερικής αποπληρωμής.</span></div>
+      <div class="intro-item"><strong data-i18n="introT4">Έξοδα Οχήματος</strong><span data-i18n="introD4"> — ασφάλεια, τέλη, service, καύσιμα (ενεργό μόνο αν έχεις συμπληρώσει δάνειο).</span></div>
+    </div>
+    <div class="intro-example" data-i18n="introExample">Παράδειγμα: μικτός μισθός 1.500€ → καθαρός ~1.165€ · δάνειο 3.000€ σε 24 δόσεις στο 10% → δόση ~138€/μήνα.</div>
   </div>
 
   <div class="data-toolbar">
@@ -1284,6 +1342,15 @@ const TRANSLATIONS = {
   "h1title": "Βιβλίο Εσόδων-Εξόδων",
   "pageIntro1": "Δωρεάν υπολογισμός καθαρού μισθού (με φορολογική κλίμακα ανά ηλικία), δώρων Χριστουγέννων/Πάσχα, επιδόματος αδείας, δόσεων δανείου και μηνιαίου προϋπολογισμού.",
   "startHint1": "\u2192 Ξεκίνα από το tab «Μισθός & Δώρα» για να υπολογίσεις πρώτα το καθαρό σου εισόδημα.",
+  "introT1": "Μισθός & Δώρα",
+  "introD1": " — καθαρός μισθός, φόρος ανά ηλικία, δώρα Χριστουγέννων/Πάσχα, επίδομα αδείας.",
+  "introT2": "Προϋπολογισμός",
+  "introD2": " — πόσο σου μένει τον μήνα, πρόταση αποταμίευσης, επενδυτικός υπολογιστής.",
+  "introT3": "Δάνειο",
+  "introD3": " — δόση, τόκοι, σενάρια μερικής αποπληρωμής.",
+  "introT4": "Έξοδα Οχήματος",
+  "introD4": " — ασφάλεια, τέλη, service, καύσιμα (ενεργό μόνο αν έχεις συμπληρώσει δάνειο).",
+  "introExample": "Παράδειγμα: μικτός μισθός 1.500€ → καθαρός ~1.165€ · δάνειο 3.000€ σε 24 δόσεις στο 10% → δόση ~138€/μήνα.",
   "btn43": "Αποθήκευση",
   "btn44": "Προεπιλεγμένες τιμές",
   "btn45": "Εκτύπωση αναφοράς",
@@ -1452,6 +1519,15 @@ const TRANSLATIONS = {
   "h1title": "Income & Expense Ledger",
   "pageIntro1": "Free calculator for net salary (with the age-based tax scale), Christmas/Easter bonuses, leave allowance, loan installments, and a monthly budget.",
   "startHint1": "\u2192 Start with the \u00abSalary & Bonuses\u00bb tab to work out your net income first.",
+  "introT1": "Salary & Bonuses",
+  "introD1": " \u2014 net salary, age-based tax, Christmas/Easter bonuses, leave allowance.",
+  "introT2": "Budget",
+  "introD2": " \u2014 what's left each month, a savings suggestion, and an investment calculator.",
+  "introT3": "Loan",
+  "introD3": " \u2014 payment, interest, partial-prepayment scenarios.",
+  "introT4": "Vehicle Expenses",
+  "introD4": " \u2014 insurance, road tax, service, fuel (active only once you've entered a loan).",
+  "introExample": "Example: gross salary \u20ac1,500 \u2192 net ~\u20ac1,165 \u00b7 \u20ac3,000 loan over 24 installments at 10% \u2192 payment ~\u20ac138/month.",
   "btn43": "Save",
   "btn44": "Reset to Defaults",
   "btn45": "Print Report",
@@ -2543,6 +2619,18 @@ document.getElementById('langToggleBtn').addEventListener('click', ()=>{
   setLanguage(currentLang === 'el' ? 'en' : 'el');
 });
 loadSavedLanguage();
+
+// --- Intro card dismissal ---
+(function(){
+  const introCard = document.getElementById('introCard');
+  let dismissed = false;
+  try { dismissed = localStorage.getItem('vivlio-intro-dismissed') === 'true'; } catch(err) {}
+  if(dismissed){ introCard.style.display = 'none'; }
+  document.getElementById('introCloseBtn').addEventListener('click', ()=>{
+    introCard.style.display = 'none';
+    try { localStorage.setItem('vivlio-intro-dismissed', 'true'); } catch(err) {}
+  });
+})();
 </script>
 </body>
 </html>
