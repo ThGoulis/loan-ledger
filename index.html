@@ -726,7 +726,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
       <div class="field">
         <label for="rate" data-i18n="lbl4">Ετήσιο επιτόκιο</label>
         <div class="row">
-          <input type="number" id="rate" value="11.25" min="0" step="0.05">
+          <input type="number" id="rate" value="10" min="0" step="0.05">
           <span class="unit" data-i18n="unit100">%</span>
         </div>
       </div>
@@ -860,7 +860,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="grossSalary" data-i18n="lbl9">Μικτός μηνιαίος μισθός (τακτικός)</label>
             <div class="row">
-              <input type="number" id="grossSalary" value="1570" min="0" step="10">
+              <input type="number" id="grossSalary" value="1500" min="0" step="10">
               <span class="unit" data-i18n="unit105">€</span>
             </div>
           </div>
@@ -868,14 +868,14 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="hireDate" data-i18n="lbl10">Ημερομηνία πρόσληψης</label>
             <div class="date-wrap">
-              <input type="text" id="hireDate" class="date-input" value="01/01/2026" placeholder="ηη/μμ/εεεε" data-i18n-ph="hireDatePh" inputmode="numeric" maxlength="10">
+              <input type="text" id="hireDate" class="date-input" value="01/01/2020" placeholder="ηη/μμ/εεεε" data-i18n-ph="hireDatePh" inputmode="numeric" maxlength="10">
               <svg class="calendar-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
                 <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
                 <line x1="3" y1="9.5" x2="21" y2="9.5" stroke="currentColor" stroke-width="1.6"/>
                 <line x1="7" y1="3" x2="7" y2="6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
                 <line x1="17" y1="3" x2="17" y2="6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
               </svg>
-              <input type="date" id="hireDatePicker" value="2026-01-01" aria-label="Επιλογή ημερομηνίας από ημερολόγιο">
+              <input type="date" id="hireDatePicker" value="2020-01-01" aria-label="Επιλογή ημερομηνίας από ημερολόγιο">
             </div>
           </div>
 
@@ -931,7 +931,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="extraNet" data-i18n="lbl17">Έξτρα καθαρά μηνιαία <span style="font-weight:400;">(π.χ. Ticket Restaurant)</span></label>
             <div class="row">
-              <input type="number" id="extraNet" value="100" min="0" step="10">
+              <input type="number" id="extraNet" value="0" min="0" step="10">
               <span class="unit" data-i18n="unit111">€</span>
             </div>
           </div>
@@ -2422,9 +2422,9 @@ const EXPORT_FIELD_IDS = [
 ];
 
 const DEFAULT_VALUES = {
-  amount:'0', down:'0', installments:'24', rate:'11.25',
+  amount:'0', down:'0', installments:'24', rate:'10',
   prepMonth:'0', prepAmount:'0',
-  grossSalary:'1570', hireDate:'01/01/2026', ssRate:'13.37', taxCredit:'777', extraNet:'100', ageBracket:'standard',
+  grossSalary:'1500', hireDate:'01/01/2020', ssRate:'13.37', taxCredit:'777', extraNet:'0', ageBracket:'standard',
   overworkHours:'0', holidayHours:'0', overtimeHours:'0',
   motoInsurance:'0', motoRoadTax:'0', motoService:'0', motoFuel:'0', motoParking:'0', motoOther:'0',
   income:'1400', fixedExpenses:'600', vacationSaved:'0', savingsPct:'0',
