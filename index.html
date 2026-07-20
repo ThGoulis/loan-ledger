@@ -5,7 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Βιβλίο Εσόδων-Εξόδων — Υπολογισμός Καθαρού Μισθού, Δανείου & Προϋπολογισμού</title>
 <meta name="description" content="Δωρεάν διαδραστικό εργαλείο για υπολογισμό καθαρού μισθού με τη φορολογική κλίμακα ανά ηλικία, δώρα Χριστουγέννων/Πάσχα, επίδομα αδείας, δόσεις δανείου, μηνιαίο προϋπολογισμό και επενδυτικό υπολογιστή. Διαθέσιμο στα Ελληνικά και Αγγλικά.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thgoulis.github.io/loan-ledger/">
+<meta property="og:title" content="Βιβλίο Εσόδων-Εξόδων — Υπολογισμός Καθαρού Μισθού, Δανείου & Προϋπολογισμού">
+<meta property="og:description" content="Δωρεάν διαδραστικό εργαλείο για υπολογισμό καθαρού μισθού, δώρων, δανείου και μηνιαίου προϋπολογισμού. Διαθέσιμο στα Ελληνικά και Αγγλικά.">
+<meta property="og:image" content="https://thgoulis.github.io/loan-ledger/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="el_GR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Βιβλίο Εσόδων-Εξόδων">
+<meta name="twitter:description" content="Δωρεάν υπολογισμός καθαρού μισθού, δανείου και μηνιαίου προϋπολογισμού.">
+<meta name="twitter:image" content="https://thgoulis.github.io/loan-ledger/og-image.png">
 <meta name="google-site-verification" content="slmGFKoAOpQcVqOAjaYi8hfK1qHEMDZGpM2ckOUDvAE" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312312F'/%3E%3Crect x='7' y='9' width='18' height='2.5' rx='1' fill='%23EAEFEE'/%3E%3Crect x='7' y='15' width='18' height='2.5' rx='1' fill='%23EAEFEE'/%3E%3Crect x='7' y='21' width='12' height='2.5' rx='1' fill='%23B8912B'/%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
@@ -85,6 +98,13 @@ h1{
   margin:6px 0 0;
   max-width:520px;
   line-height:1.4;
+}
+.start-hint{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--teal);
+  margin:8px 0 0;
+  font-weight:600;
 }
 .stamp{
   font-family:'IBM Plex Mono', monospace;
@@ -637,6 +657,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
       <div class="eyebrow" data-i18n="eyebrow1">Μισθός, Προϋπολογισμός & Δάνειο</div>
       <h1 data-i18n="h1title">Βιβλίο Εσόδων-Εξόδων</h1>
       <p class="page-intro" data-i18n="pageIntro1">Δωρεάν υπολογισμός καθαρού μισθού (με φορολογική κλίμακα ανά ηλικία), δώρων Χριστουγέννων/Πάσχα, επιδόματος αδείας, δόσεων δανείου και μηνιαίου προϋπολογισμού.</p>
+      <p class="start-hint" data-i18n="startHint1">→ Ξεκίνα από το tab «Μισθός & Δώρα» για να υπολογίσεις πρώτα το καθαρό σου εισόδημα.</p>
     </div>
     <div class="letterhead-right">
       <button type="button" id="langToggleBtn" class="lang-pill">🌐 EN</button>
@@ -1262,6 +1283,7 @@ const TRANSLATIONS = {
   "eyebrow1": "Μισθός, Προϋπολογισμός & Δάνειο",
   "h1title": "Βιβλίο Εσόδων-Εξόδων",
   "pageIntro1": "Δωρεάν υπολογισμός καθαρού μισθού (με φορολογική κλίμακα ανά ηλικία), δώρων Χριστουγέννων/Πάσχα, επιδόματος αδείας, δόσεων δανείου και μηνιαίου προϋπολογισμού.",
+  "startHint1": "\u2192 Ξεκίνα από το tab «Μισθός & Δώρα» για να υπολογίσεις πρώτα το καθαρό σου εισόδημα.",
   "btn43": "Αποθήκευση",
   "btn44": "Προεπιλεγμένες τιμές",
   "btn45": "Εκτύπωση αναφοράς",
@@ -1429,6 +1451,7 @@ const TRANSLATIONS = {
   "eyebrow1": "Salary, Budget & Loan",
   "h1title": "Income & Expense Ledger",
   "pageIntro1": "Free calculator for net salary (with the age-based tax scale), Christmas/Easter bonuses, leave allowance, loan installments, and a monthly budget.",
+  "startHint1": "\u2192 Start with the \u00abSalary & Bonuses\u00bb tab to work out your net income first.",
   "btn43": "Save",
   "btn44": "Reset to Defaults",
   "btn45": "Print Report",
