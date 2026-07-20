@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thgoulis.github.io/loan-ledger/sitemap.xml
