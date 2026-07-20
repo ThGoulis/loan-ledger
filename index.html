@@ -484,6 +484,16 @@ input[type=range]{
 }
 .note p{ margin:0 0 8px; }
 .note p:last-child{ margin-bottom:0; }
+.site-footer{
+  margin-top:28px;
+  padding-top:14px;
+  border-top:1px solid var(--paper-line);
+  font-size:10.5px;
+  color:var(--ink-soft);
+  line-height:1.5;
+  text-align:center;
+  opacity:0.85;
+}
 .table-wrap{
   max-height:340px;
   overflow-y:auto;
@@ -836,7 +846,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
       <div class="field">
         <label for="installments" data-i18n="lbl3">Διάρκεια αποπληρωμής</label>
         <div class="row">
-          <input type="number" id="installments" value="24" min="1" step="1">
+          <input type="number" id="installments" value="24" min="1" max="600" step="1">
           <span class="unit" data-i18n="unit99">δόσεις</span>
         </div>
       </div>
@@ -844,7 +854,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
       <div class="field">
         <label for="rate" data-i18n="lbl4">Ετήσιο επιτόκιο</label>
         <div class="row">
-          <input type="number" id="rate" value="10" min="0" step="0.05">
+          <input type="number" id="rate" value="10" min="0" max="100" step="0.05">
           <span class="unit" data-i18n="unit100">%</span>
         </div>
       </div>
@@ -1005,7 +1015,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="ssRate" data-i18n="lbl11">Ασφαλιστικές κρατήσεις εργαζομένου</label>
             <div class="row">
-              <input type="number" id="ssRate" value="13.37" min="0" step="0.01">
+              <input type="number" id="ssRate" value="13.37" min="0" max="100" step="0.01">
               <span class="unit" data-i18n="unit106">%</span>
             </div>
           </div>
@@ -1030,7 +1040,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="overworkHours" data-i18n="lbl14">Ώρες υπερεργασίας <span style="font-weight:400;">(μηνιαίες, +20%)</span></label>
             <div class="row">
-              <input type="number" id="overworkHours" value="0" min="0" step="1">
+              <input type="number" id="overworkHours" value="0" min="0" max="300" step="1">
               <span class="unit" data-i18n="unit108">ώρες</span>
             </div>
           </div>
@@ -1038,7 +1048,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="holidayHours" data-i18n="lbl15">Ώρες αργίας <span style="font-weight:400;">(μηνιαίες, +75%)</span></label>
             <div class="row">
-              <input type="number" id="holidayHours" value="0" min="0" step="1">
+              <input type="number" id="holidayHours" value="0" min="0" max="300" step="1">
               <span class="unit" data-i18n="unit109">ώρες</span>
             </div>
           </div>
@@ -1046,7 +1056,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="overtimeHours" data-i18n="lbl16">Ώρες υπερωρίας <span style="font-weight:400;">(μηνιαίες, +40%)</span></label>
             <div class="row">
-              <input type="number" id="overtimeHours" value="0" min="0" step="1">
+              <input type="number" id="overtimeHours" value="0" min="0" max="300" step="1">
               <span class="unit" data-i18n="unit110">ώρες</span>
             </div>
           </div>
@@ -1220,7 +1230,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="invYears" data-i18n="lbl22">Έτη επένδυσης</label>
             <div class="row">
-              <input type="number" id="invYears" value="15" min="1" step="1">
+              <input type="number" id="invYears" value="15" min="1" max="100" step="1">
               <span class="unit" data-i18n="unit116">έτη</span>
             </div>
           </div>
@@ -1246,7 +1256,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
           <div class="field">
             <label for="invRate" data-i18n="lbl25">Υποθετικό ετήσιο ποσοστό απόδοσης</label>
             <div class="row">
-              <input type="number" id="invRate" value="6" min="0" step="0.5">
+              <input type="number" id="invRate" value="6" min="0" max="100" step="0.5">
               <span class="unit" data-i18n="unit118">%</span>
             </div>
           </div>
@@ -1376,6 +1386,8 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
   </div>
   <!-- /tabMoto -->
 
+  <div class="site-footer" data-i18n="siteFooter1">Το εργαλείο παρέχεται ενδεικτικά, χωρίς καμία εγγύηση ακρίβειας — δεν αποτελεί φορολογική, νομική ή χρηματοοικονομική συμβουλή. Για αποφάσεις που σας δεσμεύουν, συμβουλευτείτε αρμόδιο επαγγελματία (λογιστή, μισθοδοσία, τραπεζικό σύμβουλο).</div>
+
   <div id="printReport" class="print-only"></div>
 
 </div>
@@ -1389,6 +1401,7 @@ const TRANSLATIONS = {
   "eyebrow1": "Μισθός, Προϋπολογισμός & Δάνειο",
   "h1title": "Βιβλίο Εσόδων-Εξόδων",
   "pageIntro1": "Δωρεάν υπολογισμός καθαρού μισθού (με φορολογική κλίμακα ανά ηλικία), δώρων Χριστουγέννων/Πάσχα, επιδόματος αδείας, δόσεων δανείου και μηνιαίου προϋπολογισμού.",
+  "siteFooter1": "Το εργαλείο παρέχεται ενδεικτικά, χωρίς καμία εγγύηση ακρίβειας — δεν αποτελεί φορολογική, νομική ή χρηματοοικονομική συμβουλή. Για αποφάσεις που σας δεσμεύουν, συμβουλευτείτε αρμόδιο επαγγελματία (λογιστή, μισθοδοσία, τραπεζικό σύμβουλο).",
   "startHint1": "\u2192 Ξεκίνα από το tab «Μισθός & Δώρα» για να υπολογίσεις πρώτα το καθαρό σου εισόδημα.",
   "introT1": "Μισθός & Δώρα",
   "introD1": " — καθαρός μισθός, φόρος ανά ηλικία, δώρα Χριστουγέννων/Πάσχα, επίδομα αδείας.",
@@ -1567,6 +1580,7 @@ const TRANSLATIONS = {
   "eyebrow1": "Salary, Budget & Loan",
   "h1title": "Income & Expense Ledger",
   "pageIntro1": "Free calculator for net salary (with the age-based tax scale), Christmas/Easter bonuses, leave allowance, loan installments, and a monthly budget.",
+  "siteFooter1": "This tool is provided for indicative purposes only, with no guarantee of accuracy \u2014 it does not constitute tax, legal, or financial advice. For decisions that commit you, consult a qualified professional (accountant, payroll manager, or bank advisor).",
   "startHint1": "\u2192 Start with the \u00abSalary & Bonuses\u00bb tab to work out your net income first.",
   "introT1": "Salary & Bonuses",
   "introD1": " \u2014 net salary, age-based tax, Christmas/Easter bonuses, leave allowance.",
@@ -2696,6 +2710,40 @@ document.getElementById('langToggleBtn').addEventListener('click', ()=>{
   setLanguage(currentLang === 'el' ? 'en' : 'el');
 });
 loadSavedLanguage();
+
+// --- Input validation / clamping ---
+// HTML min/max attributes only affect the spinner arrows, not manually typed
+// values, so we enforce real bounds here on blur (not on every keystroke,
+// so the user can still type freely mid-edit).
+const FIELD_BOUNDS = {
+  amount: {min:0}, down: {min:0}, installments: {min:1, max:600}, rate: {min:0, max:100},
+  prepMonth: {min:1}, prepAmount: {min:0},
+  grossSalary: {min:0}, ssRate: {min:0, max:100}, taxCredit: {min:0},
+  overworkHours: {min:0, max:300}, holidayHours: {min:0, max:300}, overtimeHours: {min:0, max:300},
+  extraNet: {min:0},
+  motoInsurance: {min:0}, motoRoadTax: {min:0}, motoService: {min:0},
+  motoFuel: {min:0}, motoParking: {min:0}, motoOther: {min:0},
+  income: {min:0}, fixedExpenses: {min:0}, savingsPct: {min:0, max:100}, vacationSaved: {min:0},
+  invStart: {min:0}, invYears: {min:1, max:100}, invContribution: {min:0}, invRate: {min:0, max:100}
+};
+
+Object.keys(FIELD_BOUNDS).forEach(id=>{
+  const el = document.getElementById(id);
+  if(!el) return;
+  const {min, max} = FIELD_BOUNDS[id];
+  el.addEventListener('blur', function(){
+    if(this.value === '') return; // allow empty while editing/clearing
+    let v = parseFloat(this.value);
+    if(isNaN(v)) return;
+    if(min !== undefined && v < min) v = min;
+    if(max !== undefined && v > max) v = max;
+    if(v !== parseFloat(this.value)){
+      this.value = v;
+      this.dispatchEvent(new Event('input'));
+    }
+  });
+});
+
 
 // --- Intro card dismissal ---
 (function(){
