@@ -717,8 +717,8 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
     <div class="intro-grid">
       <div class="intro-item"><strong data-i18n="introT1">Μισθός & Δώρα</strong><span data-i18n="introD1"> — καθαρός μισθός, φόρος ανά ηλικία, δώρα Χριστουγέννων/Πάσχα, επίδομα αδείας.</span></div>
       <div class="intro-item"><strong data-i18n="introT2">Προϋπολογισμός</strong><span data-i18n="introD2"> — πόσο σου μένει τον μήνα, πρόταση αποταμίευσης, επενδυτικός υπολογιστής.</span></div>
+      <div class="intro-item"><strong data-i18n="introT4">Έξοδα Οχήματος</strong><span data-i18n="introD4"> — ασφάλεια, τέλη, service, καύσιμα (ανεξάρτητα από το αν υπάρχει δάνειο).</span></div>
       <div class="intro-item"><strong data-i18n="introT3">Δάνειο</strong><span data-i18n="introD3"> — δόση, τόκοι, σενάρια μερικής αποπληρωμής.</span></div>
-      <div class="intro-item"><strong data-i18n="introT4">Έξοδα Οχήματος</strong><span data-i18n="introD4"> — ασφάλεια, τέλη, service, καύσιμα (ενεργό μόνο αν έχεις συμπληρώσει δάνειο).</span></div>
     </div>
     <div class="intro-example" data-i18n="introExample">Παράδειγμα: μικτός μισθός 1.500€ → καθαρός ~1.165€ · δάνειο 3.000€ σε 24 δόσεις στο 10% → δόση ~138€/μήνα.</div>
   </div>
@@ -769,14 +769,14 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
   <div class="tab-nav">
     <button id="tabBtnSalary" class="tab-btn active" data-i18n="btn46">Μισθός & Δώρα</button>
     <button id="tabBtnBudget" class="tab-btn" data-i18n="btn47">Προϋπολογισμός</button>
-    <button id="tabBtnLoan" class="tab-btn" data-i18n="btn48">Δάνειο</button>
     <button id="tabBtnMoto" class="tab-btn" data-i18n="btn49">Έξοδα Οχήματος</button>
+    <button id="tabBtnLoan" class="tab-btn" data-i18n="btn48">Δάνειο</button>
   </div>
 
   <div id="tabLoan" style="display:none;">
   <div class="grid">
     <div class="card">
-      <h2 data-i18n="h234"><span class="num">5</span> Στοιχεία Δανείου</h2>
+      <h2 data-i18n="h234"><span class="num">7</span> Στοιχεία Δανείου</h2>
 
       <div class="field">
         <label for="amount" data-i18n="lbl1">Ποσό δανείου</label>
@@ -814,7 +814,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
     </div>
 
     <div class="card">
-      <h2 data-i18n="h235"><span class="num">6</span> Αποτελέσματα</h2>
+      <h2 data-i18n="h235"><span class="num">8</span> Αποτελέσματα</h2>
       <div class="results">
         <div class="result-box big">
           <div class="label" data-i18n="reslbl66">Μηνιαία δόση</div>
@@ -883,7 +883,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
   <hr class="divider">
 
   <div class="card">
-    <h2 data-i18n="h236"><span class="num">7</span> Μερική Αποπληρωμή</h2>
+    <h2 data-i18n="h236"><span class="num">9</span> Μερική Αποπληρωμή</h2>
     <div class="field">
       <label for="prepMonth" data-i18n="lbl6">Μήνας εφαρμογής έκτακτης καταβολής</label>
       <div class="row">
@@ -1270,7 +1270,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
   <div id="tabMoto" style="display:none;">
     <div class="grid">
       <div class="card">
-        <h2 data-i18n="h241"><span class="num">8</span> Πάγια Έξοδα Οχήματος <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(ετήσια)</span></h2>
+        <h2 data-i18n="h241"><span class="num">5</span> Πάγια Έξοδα Οχήματος <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(ετήσια)</span></h2>
 
         <div class="field">
           <label for="motoInsurance" data-i18n="lbl28">Ασφάλεια</label>
@@ -1298,7 +1298,7 @@ table.amort-table tbody tr:nth-child(even){ background:#fff; }
       </div>
 
       <div class="card">
-        <h2 data-i18n="h242"><span class="num">9</span> Λειτουργικά Έξοδα <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(μηνιαία)</span></h2>
+        <h2 data-i18n="h242"><span class="num">6</span> Λειτουργικά Έξοδα <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(μηνιαία)</span></h2>
 
         <div class="field">
           <label for="motoFuel" data-i18n="lbl31">Καύσιμα</label>
@@ -1349,7 +1349,7 @@ const TRANSLATIONS = {
   "introT3": "Δάνειο",
   "introD3": " — δόση, τόκοι, σενάρια μερικής αποπληρωμής.",
   "introT4": "Έξοδα Οχήματος",
-  "introD4": " — ασφάλεια, τέλη, service, καύσιμα (ενεργό μόνο αν έχεις συμπληρώσει δάνειο).",
+  "introD4": " — ασφάλεια, τέλη, service, καύσιμα (ανεξάρτητα από το αν υπάρχει δάνειο).",
   "introExample": "Παράδειγμα: μικτός μισθός 1.500€ → καθαρός ~1.165€ · δάνειο 3.000€ σε 24 δόσεις στο 10% → δόση ~138€/μήνα.",
   "btn43": "Αποθήκευση",
   "btn44": "Προεπιλεγμένες τιμές",
@@ -1363,7 +1363,7 @@ const TRANSLATIONS = {
   "btn47": "Προϋπολογισμός",
   "btn48": "Δάνειο",
   "btn49": "Έξοδα Οχήματος",
-  "h234": "<span class=\"num\">5</span> Στοιχεία Δανείου",
+  "h234": "<span class=\"num\">7</span> Στοιχεία Δανείου",
   "lbl1": "Ποσό δανείου",
   "unit97": "€",
   "lbl2": "Προκαταβολή",
@@ -1373,7 +1373,7 @@ const TRANSLATIONS = {
   "lbl4": "Ετήσιο επιτόκιο",
   "unit100": "%",
   "btn50": "Καθαρισμός πεδίων δανείου <span style=\"font-weight:400;\">(εκτός επιτοκίου)</span>",
-  "h235": "<span class=\"num\">6</span> Αποτελέσματα",
+  "h235": "<span class=\"num\">8</span> Αποτελέσματα",
   "reslbl66": "Μηνιαία δόση",
   "reslbl67": "Χρηματοδοτούμενο κεφάλαιο",
   "reslbl68": "Σύνολο τόκων",
@@ -1391,7 +1391,7 @@ const TRANSLATIONS = {
   "th128": "Τόκοι",
   "th129": "Κεφάλαιο",
   "th130": "Υπόλοιπο",
-  "h236": "<span class=\"num\">7</span> Μερική Αποπληρωμή",
+  "h236": "<span class=\"num\">9</span> Μερική Αποπληρωμή",
   "lbl6": "Μήνας εφαρμογής έκτακτης καταβολής",
   "unit103": "μήνας",
   "lbl7": "Ποσό μερικής αποπληρωμής",
@@ -1490,14 +1490,14 @@ const TRANSLATIONS = {
   "reslbl90": "Προτεινόμενη προσθήκη <span style=\"font-weight:400;\">(πλεόνασμα δώρων φέτος)</span>",
   "reslbl91": "Νέο σύνολο αν το προσθέσεις",
   "note96": "Το αποθεματικό διακοπών λειτουργεί σαν τα δώρα/επίδομα αδείας: δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού, αλλά ένα ξεχωριστό ποσό που συσσωρεύεται από το πλεόνασμα των δώρων (αφού καλυφθούν τα πάγια έξοδα οχήματος) και μπορεί να ξοδευτεί ελεύθερα σε διακοπές, ταξίδια ή άλλες δραστηριότητες. Το \"ήδη αποταμιευμένα\" το ενημερώνετε εσείς χειροκίνητα κάθε φορά που προσθέτετε ή ξοδεύετε από αυτό.",
-  "h241": "<span class=\"num\">8</span> Πάγια Έξοδα Οχήματος <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(ετήσια)</span>",
+  "h241": "<span class=\"num\">5</span> Πάγια Έξοδα Οχήματος <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(ετήσια)</span>",
   "lbl28": "Ασφάλεια",
   "unit120": "€/έτος",
   "lbl29": "Τέλη κυκλοφορίας",
   "unit121": "€/έτος",
   "lbl30": "Service / συντήρηση",
   "unit122": "€/έτος",
-  "h242": "<span class=\"num\">9</span> Λειτουργικά Έξοδα <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(μηνιαία)</span>",
+  "h242": "<span class=\"num\">6</span> Λειτουργικά Έξοδα <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(μηνιαία)</span>",
   "lbl31": "Καύσιμα",
   "unit123": "€/μήνα",
   "lbl32": "Πάρκινγκ",
@@ -1526,7 +1526,7 @@ const TRANSLATIONS = {
   "introT3": "Loan",
   "introD3": " \u2014 payment, interest, partial-prepayment scenarios.",
   "introT4": "Vehicle Expenses",
-  "introD4": " \u2014 insurance, road tax, service, fuel (active only once you've entered a loan).",
+  "introD4": " \u2014 insurance, road tax, service, fuel (independent of whether there's a loan).",
   "introExample": "Example: gross salary \u20ac1,500 \u2192 net ~\u20ac1,165 \u00b7 \u20ac3,000 loan over 24 installments at 10% \u2192 payment ~\u20ac138/month.",
   "btn43": "Save",
   "btn44": "Reset to Defaults",
@@ -1540,7 +1540,7 @@ const TRANSLATIONS = {
   "btn47": "Budget",
   "btn48": "Loan",
   "btn49": "Vehicle Expenses",
-  "h234": "<span class=\"num\">5</span> Loan Details",
+  "h234": "<span class=\"num\">7</span> Loan Details",
   "lbl1": "Loan Amount",
   "unit97": "€",
   "lbl2": "Down Payment",
@@ -1550,7 +1550,7 @@ const TRANSLATIONS = {
   "lbl4": "Annual Interest Rate",
   "unit100": "%",
   "btn50": "Clear Loan Fields <span style=\"font-weight:400;\">(except interest rate)</span>",
-  "h235": "<span class=\"num\">6</span> Results",
+  "h235": "<span class=\"num\">8</span> Results",
   "reslbl66": "Monthly Payment",
   "reslbl67": "Financed Principal",
   "reslbl68": "Total Interest",
@@ -1568,7 +1568,7 @@ const TRANSLATIONS = {
   "th128": "Interest",
   "th129": "Principal",
   "th130": "Balance",
-  "h236": "<span class=\"num\">7</span> Partial Prepayment",
+  "h236": "<span class=\"num\">9</span> Partial Prepayment",
   "lbl6": "Month of Extra Payment",
   "unit103": "month",
   "lbl7": "Prepayment Amount",
@@ -1667,14 +1667,14 @@ const TRANSLATIONS = {
   "reslbl90": "Suggested Addition <span style=\"font-weight:400;\">(this years bonus surplus)</span>",
   "reslbl91": "New Total If Added",
   "note96": "The vacation fund works like the bonuses/leave allowance: it is not part of the regular monthly budget, but a separate amount that builds up from the bonus surplus (after covering fixed vehicle expenses) and can be spent freely on vacations, trips, or other activities. You update already saved manually each time you add to or spend from it.",
-  "h241": "<span class=\"num\">8</span> Fixed Vehicle Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(annual)</span>",
+  "h241": "<span class=\"num\">5</span> Fixed Vehicle Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(annual)</span>",
   "lbl28": "Insurance",
   "unit120": "€/yr",
   "lbl29": "Road Tax",
   "unit121": "€/yr",
   "lbl30": "Service / Maintenance",
   "unit122": "€/yr",
-  "h242": "<span class=\"num\">9</span> Operating Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(monthly)</span>",
+  "h242": "<span class=\"num\">6</span> Operating Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(monthly)</span>",
   "lbl31": "Fuel",
   "unit123": "€/mo",
   "lbl32": "Parking",
@@ -1821,7 +1821,6 @@ function recompute(){
   if(viewMode==='monthly') renderMonthlyTable();
   lastMonthlyPayment = M;
   if(typeof recomputeBudget === 'function') recomputeBudget();
-  if(typeof updateMotoTabAvailability === 'function') updateMotoTabAvailability();
   return {principal, months, r, M, schedule};
 }
 
@@ -1963,28 +1962,6 @@ tabButtons.moto.addEventListener('click', ()=>showTab('moto'));
 tabButtons.salary.addEventListener('click', ()=>showTab('salary'));
 tabButtons.budget.addEventListener('click', ()=>showTab('budget'));
 
-function updateMotoTabAvailability(){
-  const amount = parseFloat(document.getElementById('amount').value)||0;
-  const isZero = amount <= 0;
-  tabButtons.moto.disabled = isZero;
-  tabButtons.moto.title = isZero ? (currentLang==='en' ? 'Fill in the loan amount to enable' : 'Συμπληρώστε ποσό δανείου για να ενεργοποιηθεί') : '';
-  if(isZero && tabPanels.moto.style.display !== 'none'){
-    showTab('salary');
-  }
-  if(isZero){
-    const motoFieldIds = ['motoInsurance','motoRoadTax','motoService','motoFuel','motoParking','motoOther'];
-    let clearedSomething = false;
-    motoFieldIds.forEach(id=>{
-      const el = document.getElementById(id);
-      if((parseFloat(el.value)||0) !== 0){
-        el.value = 0;
-        clearedSomething = true;
-      }
-    });
-    if(clearedSomething && typeof recomputeBudget === 'function') recomputeBudget();
-  }
-}
-
 document.getElementById('clearLoanBtn').addEventListener('click', ()=>{
   document.getElementById('amount').value = '';
   document.getElementById('down').value = '';
@@ -2001,19 +1978,19 @@ let lastAllocationSurplus = 0;
 let lastSavingsSuggestion = 0;
 
 function recomputeBudget(){
-  const motoActive = parseFloat(document.getElementById('amount').value) > 0;
+  const hasLoan = parseFloat(document.getElementById('amount').value) > 0;
 
   const insurance = parseFloat(document.getElementById('motoInsurance').value)||0;
   const roadTax = parseFloat(document.getElementById('motoRoadTax').value)||0;
   const service = parseFloat(document.getElementById('motoService').value)||0;
-  const fixedMonthlyEquiv = motoActive ? (insurance+roadTax+service)/12 : 0;
+  const fixedMonthlyEquiv = (insurance+roadTax+service)/12;
 
   const fuel = parseFloat(document.getElementById('motoFuel').value)||0;
   const parking = parseFloat(document.getElementById('motoParking').value)||0;
   const other = parseFloat(document.getElementById('motoOther').value)||0;
-  const variableMonthly = motoActive ? (fuel+parking+other) : 0;
+  const variableMonthly = fuel+parking+other;
 
-  const motoTotal = motoActive ? (lastMonthlyPayment + fixedMonthlyEquiv + variableMonthly) : 0;
+  const motoTotal = lastMonthlyPayment + fixedMonthlyEquiv + variableMonthly;
 
   document.getElementById('fMotoLoan').textContent = euroDec(lastMonthlyPayment);
   document.getElementById('fMotoFixed').textContent = euroDec(fixedMonthlyEquiv);
@@ -2056,14 +2033,10 @@ function recomputeBudget(){
   const tips = [];
   const motoSharePct = income > 0 ? (motoTotal/income)*100 : 0;
 
-  if(!motoActive){
+  if(motoSharePct > 20){
     tips.push(currentLang==='en'
-      ? `There is no active loan right now \u2014 the vehicle cost share of your income will show here once you fill in a loan amount.`
-      : `Δεν υπάρχει ενεργό δάνειο αυτή τη στιγμή — το μερίδιο κόστους οχήματος επί του εισοδήματος θα εμφανιστεί εδώ μόλις συμπληρώσεις ποσό δανείου.`);
-  } else if(motoSharePct > 20){
-    tips.push(currentLang==='en'
-      ? `The vehicle absorbs about <strong>${motoSharePct.toFixed(0)}%</strong> of your monthly income \u2014 quite a high share. A bigger down payment or a smaller loan amount would meaningfully ease your monthly budget.`
-      : `Το όχημα απορροφά περίπου <strong>${motoSharePct.toFixed(0)}%</strong> του μηνιαίου σου εισοδήματος — αρκετά υψηλό ποσοστό. Αν εξετάζεις μεγαλύτερη προκαταβολή ή μικρότερο ποσό δανείου, θα ελαφρύνει σημαντικά τον μηνιαίο προϋπολογισμό σου.`);
+      ? `The vehicle absorbs about <strong>${motoSharePct.toFixed(0)}%</strong> of your monthly income \u2014 quite a high share. It's worth reviewing the numbers (loan terms and/or running costs) to ease your monthly budget.`
+      : `Το όχημα απορροφά περίπου <strong>${motoSharePct.toFixed(0)}%</strong> του μηνιαίου σου εισοδήματος — αρκετά υψηλό ποσοστό. Αξίζει να ξανακοιτάξεις τα νούμερα (όρους δανείου ή/και τρέχοντα έξοδα) για να ελαφρύνει τον μηνιαίο προϋπολογισμό σου.`);
   } else if(motoSharePct > 0){
     tips.push(currentLang==='en'
       ? `The vehicle absorbs about <strong>${motoSharePct.toFixed(0)}%</strong> of your monthly income \u2014 a reasonable range.`
@@ -2187,14 +2160,14 @@ function recomputeBudget(){
       : `<div class="tip-item"><span class="tip-icon">→</span><span>${t}</span></div>`
   ).join('');
 
-  updateSummaryBar(motoActive, income, remainNoBonus, remaining, afterSavingsAmount);
+  updateSummaryBar(hasLoan, income, remainNoBonus, remaining, afterSavingsAmount);
 }
 
-function updateSummaryBar(motoActive, income, remainNoBonus, remaining, afterSavingsAmount){
+function updateSummaryBar(hasLoan, income, remainNoBonus, remaining, afterSavingsAmount){
   document.getElementById('sumNetSalary').textContent = euroDec(lastNetSalary);
 
   const loanItem = document.getElementById('sumLoanItem');
-  if(motoActive){
+  if(hasLoan){
     document.getElementById('sumLoan').textContent = euroDec(lastMonthlyPayment);
     loanItem.style.display = 'flex';
   } else {
@@ -2535,7 +2508,7 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
   const val = id => document.getElementById(id).value;
   const pt = (el, en) => currentLang==='en' ? en : el;
 
-  const motoActive = parseFloat(val('amount')) > 0;
+  const hasLoan = parseFloat(val('amount')) > 0;
 
   let html = `
     <h1>${pt('Βιβλίο Εσόδων-Εξόδων — Αναφορά','Income & Expense Ledger — Report')}</h1>
@@ -2554,7 +2527,7 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
       <tr><td>${pt('Επίδομα Αδείας (καθαρό)','Leave Allowance (net)')}</td><td>${txt('leaveNet')}</td></tr>
     </table>
 
-    ${motoActive ? `
+    ${hasLoan ? `
     <h2>${pt('Δάνειο','Loan')}</h2>
     <table>
       <tr><td>${pt('Ποσό δανείου','Loan Amount')}</td><td>${val('amount')} €</td></tr>
@@ -2565,6 +2538,7 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
       <tr><td>${pt('Σύνολο τόκων','Total Interest')}</td><td>${txt('rInterest')}</td></tr>
       <tr><td>${pt('Τελικό συνολικό κόστος','Total Final Cost')}</td><td>${txt('rTotal')}</td></tr>
     </table>
+    ` : ''}
 
     <h2>${pt('Έξοδα Οχήματος','Vehicle Expenses')}</h2>
     <table>
@@ -2572,7 +2546,6 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
       <tr><td>${pt('Λειτουργικά έξοδα οχήματος/μήνα','Operating Vehicle Expenses/month')}</td><td>${txt('fMotoVar')}</td></tr>
       <tr><td><strong>${pt('Συνολικό μηνιαίο κόστος οχήματος','Total Monthly Vehicle Cost')}</strong></td><td><strong>${txt('fMotoTotal')}</strong></td></tr>
     </table>
-    ` : ''}
 
     <h2>${pt('Προϋπολογισμός','Budget')}</h2>
     <table>
