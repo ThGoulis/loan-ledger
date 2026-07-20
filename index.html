@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Βιβλίο Εσόδων-Εξόδων</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#EAEFEE;
+  --paper-line:#c9d3d1;
+  --ink:#12312F;
+  --ink-soft:#3F5957;
+  --teal:#1F5C56;
+  --teal-deep:#123B37;
+  --brass:#B8912B;
+  --brass-soft:#E4CE8C;
+  --red-ink:#8C3B2E;
+  --card:#F4F7F6;
+  --shadow: 0 1px 0 rgba(18,49,47,0.08);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:
+    repeating-linear-gradient(180deg, transparent, transparent 27px, var(--paper-line) 28px),
+    var(--paper);
+  color:var(--ink);
+  font-family:'Inter', sans-serif;
+  padding:28px 16px 60px;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.sheet{
+  max-width:920px;
+  margin:0 auto;
+}
+.letterhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:14px;
+  margin-bottom:26px;
+}
+.letterhead-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.lang-pill{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.03em;
+  padding:6px 12px;
+  border:1px solid var(--brass);
+  border-radius:999px;
+  background:transparent;
+  color:var(--brass);
+  cursor:pointer;
+}
+.lang-pill:hover{ background:var(--brass); color:#fff; }
+.lang-pill:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+.letterhead .eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:4px;
+}
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:32px;
+  margin:0;
+  letter-spacing:-0.01em;
+}
+.stamp{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  border:1.5px solid var(--brass);
+  color:var(--brass);
+  padding:6px 10px;
+  transform:rotate(-3deg);
+  border-radius:3px;
+  white-space:nowrap;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:22px;
+}
+@media (max-width:760px){ .grid{grid-template-columns:1fr;} }
+
+/* --- Mobile refinements (desktop layout above untouched) --- */
+@media (max-width:640px){
+  body{ padding:16px 10px 40px; }
+  .sheet{ max-width:100%; }
+
+  .letterhead{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .letterhead-right{ align-self:flex-start; }
+  .letterhead .stamp{ transform:none; align-self:flex-start; }
+  h1{ font-size:24px; }
+
+  .data-toolbar{ flex-wrap:wrap; gap:8px; }
+  .toolbar-btn{ font-size:11px; padding:8px 10px; flex:1 1 auto; text-align:center; }
+  .toolbar-status{ flex-basis:100%; }
+
+  .tab-nav{ flex-wrap:wrap; gap:0; }
+  .tab-btn{ flex:1 1 45%; font-size:13px; padding:10px 6px; }
+
+  .summary-bar{ gap:12px; padding:10px 14px; }
+  .summary-value{ font-size:14px; }
+  .summary-badge{ margin-left:0; flex-basis:100%; text-align:center; }
+
+  .card{ padding:16px 14px; }
+
+  .results[style*="1fr 1fr 1fr"]{ grid-template-columns:1fr !important; }
+  .results[style*="1fr 1fr"]{ grid-template-columns:1fr !important; }
+  .compare{ grid-template-columns:1fr; }
+
+  .result-box.big .value{ font-size:24px; }
+  .result-box .value{ font-size:18px; }
+
+  table.amort-table{ font-size:11px; }
+  table.amort-table td, table.amort-table th{ padding:5px 6px; }
+
+  .date-wrap input.date-input{ font-size:14px; }
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--paper-line);
+  border-radius:6px;
+  padding:20px 22px;
+  box-shadow:var(--shadow);
+  min-width:0;
+}
+.card h2{
+  font-family:'Fraunces', serif;
+  font-size:16px;
+  font-weight:600;
+  margin:0 0 16px;
+  color:var(--teal-deep);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.card h2 .num{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--brass);
+  border:1px solid var(--brass);
+  border-radius:50%;
+  width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.field{ margin-bottom:16px; }
+.resync-link{
+  background:none;
+  border:none;
+  padding:4px 0 0;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  color:var(--teal);
+  cursor:pointer;
+  text-decoration:underline;
+}
+.resync-link:hover{ color:var(--teal-deep); }
+.field label{
+  display:block;
+  font-size:12.5px;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+  font-weight:500;
+}
+.field .row{ display:flex; align-items:center; gap:10px; }
+input[type=number], input[type=range]{
+  width:100%;
+}
+input.date-input{
+  width:100%;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:15px;
+  letter-spacing:0.06em;
+  padding:9px 10px;
+  border:1px solid var(--paper-line);
+  border-radius:4px;
+  background:#fff;
+  color:var(--ink);
+}
+input.date-input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+input.date-input::placeholder{ color:var(--paper-line); letter-spacing:0.06em; }
+select.date-input{
+  width:100%;
+  font-family:'Inter', sans-serif;
+  font-size:14px;
+  padding:9px 10px;
+  border:1px solid var(--paper-line);
+  border-radius:4px;
+  background:#fff;
+  color:var(--ink);
+  cursor:pointer;
+}
+select.date-input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+.date-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.date-wrap input.date-input{ padding-right:38px; }
+.date-wrap .calendar-icon{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--brass);
+  pointer-events:none;
+}
+.date-wrap input[type=date]{
+  position:absolute;
+  right:4px;
+  top:50%;
+  transform:translateY(-50%);
+  width:26px;
+  height:26px;
+  opacity:0;
+  cursor:pointer;
+  border:none;
+  padding:0;
+}
+input[type=number]{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:15px;
+  padding:9px 10px;
+  border:1px solid var(--paper-line);
+  border-radius:4px;
+  background:#fff;
+  color:var(--ink);
+}
+input[type=number]:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+input[type=range]{
+  accent-color:var(--teal);
+}
+.unit{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--ink-soft);
+  min-width:34px;
+}
+
+.results{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:6px;
+}
+.result-box{
+  border-left:3px solid var(--teal);
+  padding:8px 12px;
+  background:#fff;
+}
+.result-box.big{
+  grid-column:1/3;
+  border-left-color:var(--brass);
+}
+.result-box .label{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--ink-soft);
+  font-weight:500;
+}
+.result-box .value{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:22px;
+  font-weight:600;
+  color:var(--ink);
+  margin-top:2px;
+}
+.result-box.big .value{ font-size:30px; color:var(--teal-deep); }
+.result-caption{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  color:var(--ink-soft);
+  margin-top:4px;
+}
+
+.ledger-strip{
+  margin-top:22px;
+}
+.ledger-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+}
+.ledger-row .yr{ width:34px; color:var(--ink-soft); }
+.bar{
+  flex:1;
+  height:14px;
+  display:flex;
+  border-radius:2px;
+  overflow:hidden;
+  background:#dfe6e5;
+}
+.bar .principal{ background:var(--teal); }
+.bar .interest{ background:var(--brass-soft); }
+.legend{
+  display:flex; gap:18px; margin-top:10px;
+  font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft);
+}
+.legend span{ display:inline-flex; align-items:center; gap:6px; }
+.swatch{ width:10px;height:10px;border-radius:2px; display:inline-block; }
+
+.divider{
+  border:none;
+  border-top:1px dashed var(--paper-line);
+  margin:26px 0;
+}
+
+.toggle-group{
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
+}
+.toggle-group button{
+  flex:1;
+  padding:9px 10px;
+  border-radius:4px;
+  border:1px solid var(--paper-line);
+  background:#fff;
+  color:var(--ink-soft);
+  font-family:'Inter', sans-serif;
+  font-size:12.5px;
+  font-weight:500;
+  cursor:pointer;
+}
+.toggle-group button.active{
+  background:var(--teal);
+  border-color:var(--teal);
+  color:#fff;
+}
+.toggle-group button:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+
+.compute-btn{
+  width:100%;
+  padding:12px;
+  background:var(--teal-deep);
+  color:#F4F7F6;
+  border:none;
+  border-radius:4px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  margin-top:4px;
+}
+.compute-btn:hover{ background:var(--teal); }
+.compute-btn:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+
+.compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:16px;
+}
+.compare .col{
+  padding:12px 14px;
+  border-radius:4px;
+  background:#fff;
+  border:1px solid var(--paper-line);
+}
+.compare .col.after{ border-color:var(--brass); }
+.compare .col h3{
+  margin:0 0 8px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--ink-soft);
+}
+.compare .row2{
+  display:flex; justify-content:space-between; margin-bottom:6px;
+  font-size:13px;
+}
+.compare .row2 .v{ font-family:'IBM Plex Mono', monospace; font-weight:600; }
+
+.savings-banner{
+  margin-top:14px;
+  padding:12px 14px;
+  background:var(--brass-soft);
+  border-radius:4px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  color:var(--teal-deep);
+  font-weight:600;
+}
+
+.note{
+  font-size:11.5px;
+  color:var(--ink-soft);
+  margin-top:14px;
+  line-height:1.5;
+}
+.note p{ margin:0 0 8px; }
+.note p:last-child{ margin-bottom:0; }
+.table-wrap{
+  max-height:340px;
+  overflow-y:auto;
+  overflow-x:auto;
+  margin-top:12px;
+  border:1px solid var(--paper-line);
+  border-radius:4px;
+}
+table.amort-table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+}
+table.amort-table thead th{
+  position:sticky;
+  top:0;
+  background:var(--teal-deep);
+  color:#F4F7F6;
+  text-align:right;
+  padding:8px 10px;
+  font-weight:500;
+  letter-spacing:0.02em;
+}
+table.amort-table thead th:first-child{ text-align:left; }
+table.amort-table td{
+  text-align:right;
+  padding:6px 10px;
+  border-bottom:1px solid var(--paper-line);
+}
+table.amort-table td:first-child{ text-align:left; color:var(--ink-soft); }
+table.amort-table tbody tr:nth-child(even){ background:#fff; }
+@media (prefers-reduced-motion: reduce){ * { transition:none !important; } }
+
+.print-only{ display:none; }
+
+@media print{
+  body{ background:#fff; padding:0; }
+  .data-toolbar, .summary-bar, .tab-nav, .lang-pill, #tabLoan, #tabMoto, #tabSalary, #tabBudget{ display:none !important; }
+  .print-only{
+    display:block;
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+  }
+  .print-only h1{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    margin:0 0 4px;
+  }
+  .print-only .print-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .print-only h2{
+    font-family:'Fraunces', serif;
+    font-size:15px;
+    border-bottom:1.5px solid var(--ink);
+    padding-bottom:4px;
+    margin:18px 0 8px;
+  }
+  .print-only table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12.5px;
+    margin-bottom:6px;
+  }
+  .print-only td{
+    padding:4px 6px;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .print-only td:first-child{ color:var(--ink-soft); }
+  .print-only td:last-child{
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+  }
+}
+
+.data-toolbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+.toolbar-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:0.02em;
+  padding:7px 12px;
+  border:1px solid var(--paper-line);
+  border-radius:4px;
+  background:#fff;
+  color:var(--teal-deep);
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.toolbar-btn .tbtn-icon{ color:var(--brass); flex-shrink:0; }
+.toolbar-btn:hover{ border-color:var(--teal); }
+.toolbar-btn:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+.toolbar-status{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:var(--teal-deep);
+}
+
+.summary-bar{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+  background:#fff;
+  border:1px solid var(--paper-line);
+  border-radius:6px;
+  padding:12px 18px;
+  margin-bottom:16px;
+}
+.summary-item{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.summary-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--ink-soft);
+}
+.summary-value{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:16px;
+  font-weight:600;
+  color:var(--ink);
+}
+.summary-badge{
+  margin-left:auto;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  font-weight:600;
+  padding:6px 14px;
+  border-radius:999px;
+  color:#fff;
+}
+.summary-badge.surplus{ background:var(--teal); }
+.summary-badge.risk{ background:var(--brass); }
+.summary-badge.deficit{ background:var(--red-ink); }
+
+.tab-nav{
+  display:flex;
+  gap:2px;
+  margin-bottom:22px;
+  border-bottom:2px solid var(--ink);
+}
+.tab-btn{
+  flex:1;
+  padding:12px 14px;
+  background:transparent;
+  border:none;
+  font-family:'Fraunces', serif;
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink-soft);
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  margin-bottom:-2px;
+}
+.tab-btn.active{
+  color:var(--teal-deep);
+  border-bottom-color:var(--brass);
+}
+.tab-btn:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+.tab-btn:disabled{
+  color:var(--paper-line);
+  cursor:not-allowed;
+  pointer-events:none;
+}
+.result-box.negative{ border-left-color:var(--red-ink); }
+.result-box.deduction{
+  border-left-color:var(--red-ink);
+  background:#fbf2ef;
+}
+.result-box.deduction .label{ color:var(--red-ink); }
+.result-box.deduction .value{ color:var(--red-ink); }
+.tip-item{
+  display:flex;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px dashed var(--paper-line);
+  font-size:13px;
+  line-height:1.5;
+}
+.tip-item:last-child{ border-bottom:none; }
+.tip-icon{
+  font-family:'IBM Plex Mono', monospace;
+  color:var(--brass);
+  flex-shrink:0;
+}
+.result-box.negative .value{ color:var(--red-ink); }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="letterhead">
+    <div>
+      <div class="eyebrow" data-i18n="eyebrow1">Μισθός, Προϋπολογισμός & Δάνειο</div>
+      <h1 data-i18n="h1title">Βιβλίο Εσόδων-Εξόδων</h1>
+    </div>
+    <div class="letterhead-right">
+      <button type="button" id="langToggleBtn" class="lang-pill">🌐 EN</button>
+      <div class="stamp" id="stampDate"></div>
+    </div>
+  </div>
+
+  <div class="data-toolbar">
+    <button type="button" id="defaultsBtn" class="toolbar-btn">
+      <svg class="tbtn-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+        <path d="M4 4v6h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.5 14a8 8 0 1 0 2-8.4L4 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span data-i18n="btn44">Προεπιλεγμένες τιμές</span>
+    </button>
+    <button type="button" id="printBtn" class="toolbar-btn">
+      <svg class="tbtn-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+        <rect x="6" y="8.5" width="12" height="7" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7 8.5V4h10v4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M7 16.5V20h10v-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <span data-i18n="btn45">Εκτύπωση αναφοράς</span>
+    </button>
+    <span id="saveStatus" class="toolbar-status"></span>
+  </div>
+
+  <div class="summary-bar" id="summaryBar">
+    <div class="summary-item">
+      <span class="summary-label" data-i18n="sumlbl1">Καθαρός μισθός</span>
+      <span class="summary-value" id="sumNetSalary">—</span>
+    </div>
+    <div class="summary-item" id="sumSavingsItem" style="display:none;">
+      <span class="summary-label" data-i18n="sumlbl2">Προτ. αποταμίευση</span>
+      <span class="summary-value" id="sumSavings">—</span>
+    </div>
+    <div class="summary-item" id="sumLoanItem" style="display:none;">
+      <span class="summary-label" data-i18n="sumlbl3">Δόση δανείου</span>
+      <span class="summary-value" id="sumLoan">—</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label" data-i18n="sumlbl4">Διαθέσιμο υπόλοιπο</span>
+      <span class="summary-value" id="sumRemaining">—</span>
+    </div>
+    <div class="summary-item" id="sumAfterSavingsItem" style="display:none;">
+      <span class="summary-label" data-i18n="sumlbl5">Υπόλοιπο μετά την αποταμίευση</span>
+      <span class="summary-value" id="sumAfterSavings">—</span>
+    </div>
+    <div class="summary-badge" id="sumStatusBadge">—</div>
+  </div>
+
+  <div class="tab-nav">
+    <button id="tabBtnSalary" class="tab-btn active" data-i18n="btn46">Μισθός & Δώρα</button>
+    <button id="tabBtnBudget" class="tab-btn" data-i18n="btn47">Προϋπολογισμός</button>
+    <button id="tabBtnLoan" class="tab-btn" data-i18n="btn48">Δάνειο</button>
+    <button id="tabBtnMoto" class="tab-btn" data-i18n="btn49">Έξοδα Οχήματος</button>
+  </div>
+
+  <div id="tabLoan" style="display:none;">
+  <div class="grid">
+    <div class="card">
+      <h2 data-i18n="h234"><span class="num">5</span> Στοιχεία Δανείου</h2>
+
+      <div class="field">
+        <label for="amount" data-i18n="lbl1">Ποσό δανείου</label>
+        <div class="row">
+          <input type="number" id="amount" value="0" min="0" step="1000">
+          <span class="unit" data-i18n="unit97">€</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="down" data-i18n="lbl2">Προκαταβολή</label>
+        <div class="row">
+          <input type="number" id="down" value="0" min="0" step="1000">
+          <span class="unit" data-i18n="unit98">€</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="installments" data-i18n="lbl3">Διάρκεια αποπληρωμής</label>
+        <div class="row">
+          <input type="number" id="installments" value="24" min="1" step="1">
+          <span class="unit" data-i18n="unit99">δόσεις</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate" data-i18n="lbl4">Ετήσιο επιτόκιο</label>
+        <div class="row">
+          <input type="number" id="rate" value="11.25" min="0" step="0.05">
+          <span class="unit" data-i18n="unit100">%</span>
+        </div>
+      </div>
+
+      <button type="button" class="compute-btn" id="clearLoanBtn" style="background:transparent;color:var(--red-ink);border:1px solid var(--red-ink);margin-top:6px;" data-i18n="btn50">Καθαρισμός πεδίων δανείου <span style="font-weight:400;">(εκτός επιτοκίου)</span></button>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="h235"><span class="num">6</span> Αποτελέσματα</h2>
+      <div class="results">
+        <div class="result-box big">
+          <div class="label" data-i18n="reslbl66">Μηνιαία δόση</div>
+          <div class="value" id="rMonthly">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl67">Χρηματοδοτούμενο κεφάλαιο</div>
+          <div class="value" id="rPrincipal">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl68">Σύνολο τόκων</div>
+          <div class="value" id="rInterest">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl69">Τελικό συνολικό κόστος</div>
+          <div class="value" id="rTotal">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl70">Αριθμός δόσεων</div>
+          <div class="value" id="rMonths">—</div>
+        </div>
+      </div>
+
+      <div class="ledger-strip">
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--teal)"></span><span data-i18n="legend1">Κεφάλαιο</span></span>
+          <span><span class="swatch" style="background:var(--brass-soft)"></span><span data-i18n="legend2">Τόκοι</span></span>
+        </div>
+
+        <div class="toggle-group" style="margin-top:12px;">
+          <button id="viewYearly" class="active" data-i18n="btn51">Ετήσια προβολή</button>
+          <button id="viewMonthly" data-i18n="btn52">Μηνιαία προβολή</button>
+        </div>
+
+        <div id="yearlyView">
+          <div id="ledgerBars" style="margin-top:10px;"></div>
+        </div>
+
+        <div id="monthlyView" style="display:none;">
+          <div class="field" style="margin-top:12px;">
+            <label data-i18n="lbl5">Φίλτρο μηνών</label>
+            <div class="row" style="gap:14px;">
+              <div style="flex:1;">
+                <span class="unit" style="display:block;margin-bottom:4px;" data-i18n="unit101">από δόση</span>
+                <input type="number" id="filterFrom" value="1" min="1" step="1">
+              </div>
+              <div style="flex:1;">
+                <span class="unit" style="display:block;margin-bottom:4px;" data-i18n="unit102">έως δόση</span>
+                <input type="number" id="filterTo" value="12" min="1" step="1">
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="amort-table" id="amortTable">
+              <thead>
+                <tr><th data-i18n="th126">Δόση</th><th data-i18n="th127">Ποσό δόσης</th><th data-i18n="th128">Τόκοι</th><th data-i18n="th129">Κεφάλαιο</th><th data-i18n="th130">Υπόλοιπο</th></tr>
+              </thead>
+              <tbody id="amortBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="card">
+    <h2 data-i18n="h236"><span class="num">7</span> Μερική Αποπληρωμή</h2>
+    <div class="field">
+      <label for="prepMonth" data-i18n="lbl6">Μήνας εφαρμογής έκτακτης καταβολής</label>
+      <div class="row">
+        <input type="number" id="prepMonth" value="0" min="1" step="1">
+        <span class="unit" data-i18n="unit103">μήνας</span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="prepAmount" data-i18n="lbl7">Ποσό μερικής αποπληρωμής</label>
+      <div class="row">
+        <input type="number" id="prepAmount" value="0" min="0" step="500">
+        <span class="unit" data-i18n="unit104">€</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label data-i18n="lbl8">Τι θέλετε να πετύχει η καταβολή;</label>
+      <div class="toggle-group">
+        <button id="modeShorten" class="active" data-i18n="btn53">Μείωση διάρκειας</button>
+        <button id="modeLower" data-i18n="btn54">Μείωση δόσης</button>
+      </div>
+    </div>
+
+    <button class="compute-btn" id="computeBtn" data-i18n="btn55">ΥΠΟΛΟΓΙΣΜΟΣ ΣΕΝΑΡΙΟΥ</button>
+
+    <div class="compare" id="compareBox" style="display:none;">
+      <div class="col before">
+        <h3 data-i18n="h3a">Χωρίς έκτακτη καταβολή</h3>
+        <div class="row2"><span data-i18n="rowlbl1">Δόση</span><span class="v" id="beforeMonthly">—</span></div>
+        <div class="row2"><span data-i18n="rowlbl2">Υπόλοιπες δόσεις</span><span class="v" id="beforeMonths">—</span></div>
+        <div class="row2"><span data-i18n="rowlbl3">Τόκοι υπολοίπου διάρκειας</span><span class="v" id="beforeInterest">—</span></div>
+      </div>
+      <div class="col after">
+        <h3 data-i18n="h3b">Με έκτακτη καταβολή</h3>
+        <div class="row2"><span data-i18n="rowlbl4">Δόση</span><span class="v" id="afterMonthly">—</span></div>
+        <div class="row2"><span data-i18n="rowlbl5">Υπόλοιπες δόσεις</span><span class="v" id="afterMonths">—</span></div>
+        <div class="row2"><span data-i18n="rowlbl6">Τόκοι υπολοίπου διάρκειας</span><span class="v" id="afterInterest">—</span></div>
+      </div>
+    </div>
+    <div class="savings-banner" id="savingsBanner" style="display:none;"></div>
+
+    <div class="note" data-i18n="note92">Η προσομοίωση υπολογίζει το ανεξόφλητο κεφάλαιο τον μήνα εφαρμογής, αφαιρεί το ποσό της έκτακτης καταβολής και είτε διατηρεί σταθερή τη δόση (μειώνοντας τη διάρκεια) είτε διατηρεί σταθερή την υπόλοιπη διάρκεια (μειώνοντας τη δόση). Οι υπολογισμοί είναι ενδεικτικοί — δεν λαμβάνουν υπόψη έξοδα, ασφάλιστρα ή ενδεχόμενες προμήθειες πρόωρης αποπληρωμής.</div>
+  </div>
+  </div>
+  <!-- /tabLoan -->
+
+  <div id="tabSalary">
+
+    <div class="card" style="margin-bottom:22px;">
+      <h2 data-i18n="h237"><span class="num">1</span> Μισθός & Δώρα <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(σύστημα 14 μισθών)</span></h2>
+      <div class="grid" style="margin-top:4px;">
+        <div>
+          <div class="field">
+            <label for="grossSalary" data-i18n="lbl9">Μικτός μηνιαίος μισθός (τακτικός)</label>
+            <div class="row">
+              <input type="number" id="grossSalary" value="1570" min="0" step="10">
+              <span class="unit" data-i18n="unit105">€</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="hireDate" data-i18n="lbl10">Ημερομηνία πρόσληψης</label>
+            <div class="date-wrap">
+              <input type="text" id="hireDate" class="date-input" value="01/01/2026" placeholder="ηη/μμ/εεεε" data-i18n-ph="hireDatePh" inputmode="numeric" maxlength="10">
+              <svg class="calendar-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <line x1="3" y1="9.5" x2="21" y2="9.5" stroke="currentColor" stroke-width="1.6"/>
+                <line x1="7" y1="3" x2="7" y2="6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <line x1="17" y1="3" x2="17" y2="6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <input type="date" id="hireDatePicker" value="2026-01-01" aria-label="Επιλογή ημερομηνίας από ημερολόγιο">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ssRate" data-i18n="lbl11">Ασφαλιστικές κρατήσεις εργαζομένου</label>
+            <div class="row">
+              <input type="number" id="ssRate" value="13.37" min="0" step="0.01">
+              <span class="unit" data-i18n="unit106">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="taxCredit" data-i18n="lbl12">Βασική ετήσια μείωση φόρου <span style="font-weight:400;">(777€ χωρίς τέκνα — προσαρμόστε βάσει τέκνων, μειώνεται αυτόματα με το εισόδημα)</span></label>
+            <div class="row">
+              <input type="number" id="taxCredit" value="777" min="0" step="10">
+              <span class="unit" data-i18n="unit107">€/έτος</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ageBracket" data-i18n="lbl13">Ηλικία <span style="font-weight:400;">(επηρεάζει τη φορολογική κλίμακα)</span></label>
+            <select id="ageBracket" class="date-input" style="width:100%;">
+              <option value="young25" data-i18n="opt56">Έως 25 ετών</option>
+              <option value="young30" data-i18n="opt57">26 έως 30 ετών</option>
+              <option value="standard" selected data-i18n="opt58">Άνω των 30 ετών</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="overworkHours" data-i18n="lbl14">Ώρες υπερεργασίας <span style="font-weight:400;">(μηνιαίες, +20%)</span></label>
+            <div class="row">
+              <input type="number" id="overworkHours" value="0" min="0" step="1">
+              <span class="unit" data-i18n="unit108">ώρες</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="holidayHours" data-i18n="lbl15">Ώρες αργίας <span style="font-weight:400;">(μηνιαίες, +75%)</span></label>
+            <div class="row">
+              <input type="number" id="holidayHours" value="0" min="0" step="1">
+              <span class="unit" data-i18n="unit109">ώρες</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="overtimeHours" data-i18n="lbl16">Ώρες υπερωρίας <span style="font-weight:400;">(μηνιαίες, +40%)</span></label>
+            <div class="row">
+              <input type="number" id="overtimeHours" value="0" min="0" step="1">
+              <span class="unit" data-i18n="unit110">ώρες</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="extraNet" data-i18n="lbl17">Έξτρα καθαρά μηνιαία <span style="font-weight:400;">(π.χ. Ticket Restaurant)</span></label>
+            <div class="row">
+              <input type="number" id="extraNet" value="100" min="0" step="10">
+              <span class="unit" data-i18n="unit111">€</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="results" style="grid-template-columns:1fr;">
+            <div class="result-box">
+              <div class="label" data-i18n="reslbl71">Μικτός μηνιαίος μισθός</div>
+              <div class="value" id="sGross">—</div>
+            </div>
+            <div class="result-box deduction">
+              <div class="label" data-i18n="reslbl72">Κρατήσεις ΕΦΚΑ</div>
+              <div class="value" id="sSS">—</div>
+            </div>
+            <div class="result-box">
+              <div class="label" data-i18n="reslbl73">Φορολογητέος μισθός</div>
+              <div class="value" id="sTaxable">—</div>
+            </div>
+            <div class="result-box deduction">
+              <div class="label" data-i18n="reslbl74">Μηνιαίος φόρος εισοδήματος</div>
+              <div class="value" id="sTax">—</div>
+            </div>
+            <div class="result-box">
+              <div class="label" data-i18n="reslbl75">Καθαρός μηνιαίος μισθός (τακτικός)</div>
+              <div class="value" id="sNet">—</div>
+            </div>
+            <div class="result-box">
+              <div class="label" data-i18n="reslbl76">Πρόσθετες αμοιβές <span style="font-weight:400;">(υπερεργασία/αργία/υπερωρία, καθαρό)</span></div>
+              <div class="value" id="sExtraPayNet">—</div>
+            </div>
+            <div class="result-box big">
+              <div class="label" data-i18n="reslbl77">Σύνολο καθαρών μηνιαίων αποδοχών</div>
+              <div class="value" id="sNetTotal">—</div>
+            </div>
+          </div>
+
+          <table class="amort-table" style="margin-top:14px;">
+            <thead><tr><th data-i18n="th131">Παροχή (φετινή περίοδος)</th><th data-i18n="th132">Μικτό</th><th data-i18n="th133">Καθαρό</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="tdlbl6">Δώρο Χριστουγέννων</td><td id="xmasGross">—</td><td id="xmasNet">—</td></tr>
+              <tr><td data-i18n="tdlbl7">Δώρο Πάσχα</td><td id="easterGross">—</td><td id="easterNet">—</td></tr>
+              <tr><td data-i18n="tdlbl8">Επίδομα Αδείας</td><td id="leaveGross">—</td><td id="leaveNet">—</td></tr>
+            </tbody>
+          </table>
+
+          <table class="amort-table" style="margin-top:14px;">
+            <thead><tr><th data-i18n="th134">Ετήσια εικόνα (14 μισθοί)</th><th colspan="2" data-i18n="th135">Ποσό</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="tdlbl1">Συνολικό φορολογητέο εισόδημα</td><td colspan="2" id="sAnnualTaxable">—</td></tr>
+              <tr><td data-i18n="tdlbl2">Αρχικός φόρος κλίμακας</td><td colspan="2" id="sGrossTax">—</td></tr>
+              <tr><td data-i18n="tdlbl3">Ετήσια μείωση φόρου (μετά την αναλογική μείωση)</td><td colspan="2" id="sCredit">—</td></tr>
+              <tr><td data-i18n="tdlbl4">Τελικός ετήσιος φόρος</td><td colspan="2" id="sFinalTax">—</td></tr>
+              <tr><td data-i18n="tdlbl5">Απαιτούμενες ηλεκτρονικές συναλλαγές (30%)</td><td colspan="2" id="sEReceipts">—</td></tr>
+            </tbody>
+          </table>
+
+          <div class="savings-banner" id="incomeBanner" style="margin-top:14px;"></div>
+        </div>
+      </div>
+      <div class="note" data-i18n="note93"><p>Ενδεικτικός υπολογισμός με βάση την ισχύουσα φορολογική κλίμακα μισθωτών, η οποία διαφοροποιείται ανάλογα με την ηλικία: <strong>άνω των 30</strong> — 9% έως 10.000€ · 20% από 10.000,01 έως 20.000€ · 26% από 20.000,01 έως 30.000€ · 34% από 30.000,01 έως 40.000€ · 39% από 40.000,01 έως 60.000€ · 44% άνω των 60.000€. <strong>26 έως 30 ετών</strong> — 9% flat έως 20.000€, μετά ίδιο με την βασική κλίμακα (26%/34%/39%/44%). <strong>Έως 25 ετών</strong> — μηδενικός φόρος έως 20.000€, μετά ίδιο με την βασική κλίμακα. Η επιλογή ηλικίας δεν επηρεάζει τις κρατήσεις ΕΦΚΑ ή τη μείωση φόρου, μόνο την κλίμακα φόρου.</p><p>Η ετήσια μείωση φόρου που εισάγετε ισχύει ακέραιη για φορολογητέο εισόδημα έως 12.000€ και μειώνεται κατά 20€ για κάθε 1.000€ επιπλέον εισοδήματος — γι' αυτό υπολογίζεται αυτόματα ξανά για οποιοδήποτε μικτό μισθό βάλετε.</p><p>Τα δώρα/επίδομα υπολογίζονται αναλογικά με βάση τις ημέρες απασχόλησης εντός της αντίστοιχης περιόδου (1/5-31/12 για Χριστούγεννα και Επίδομα Αδείας, 1/1-30/4 για Πάσχα) και φορολογούνται με τον ίδιο μέσο συντελεστή του τακτικού μισθού.</p><p>Για τις πρόσθετες αμοιβές (υπερεργασία: ωρομίσθιο +20% · υπερωρία: ωρομίσθιο +40% · αργία: μόνο η προσαύξηση 75% του ωρομισθίου, αφού η βασική αμοιβή της ημέρας καλύπτεται ήδη από τον μηνιαίο μισθό — όπου ωρομίσθιο = μικτός μισθός/25/6,667) εφαρμόζεται πάγιος συντελεστής παρακράτησης 20% αντί της κλίμακας, χωρίς επιπλέον ασφαλιστικές κρατήσεις (σύμφωνα με το άρθρο 41 του Ν.5184/2025 για πλήρη απασχόληση) — αυτός ο υπολογισμός κρατήθηκε ξεχωριστός και δεν επηρεάζει τις κρατήσεις ΕΦΚΑ ή τον προοδευτικό φόρο του τακτικού μισθού.</p><p>Για να διατηρήσετε ακέραιη τη μείωση φόρου, θυμηθείτε ότι απαιτείται να καλύψετε το αντίστοιχο ποσό ηλεκτρονικών συναλλαγών (κάρτες/e-banking) μέσα στο έτος. Η ακριβής μισθοδοσία σας ενδέχεται να διαφέρει ελαφρώς — για ακριβή στοιχεία συμβουλευτείτε τον υπεύθυνο μισθοδοσίας σας.</p></div>
+    </div>
+  </div>
+  <!-- /tabSalary -->
+
+  <div id="tabBudget" style="display:none;">
+
+    <div class="card">
+      <h2 data-i18n="h238"><span class="num">2</span> Προσωπικός Προϋπολογισμός</h2>
+
+      <div class="field">
+        <label for="income" data-i18n="lbl18">Μηνιαίο καθαρό εισόδημα <span style="font-weight:400;">(συμπληρώνεται αυτόματα από τον καθαρό μηνιαίο μισθό — μπορείτε να το αλλάξετε)</span></label>
+        <div class="row">
+          <input type="number" id="income" value="1400" min="0" step="50">
+          <span class="unit" data-i18n="unit112">€</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fixedExpenses" data-i18n="lbl19">Λοιπά σταθερά μηνιαία έξοδα <span style="font-weight:400;">(ενοίκιο, λογαριασμοί, λοιπά δάνεια κ.λπ.)</span></label>
+        <div class="row">
+          <input type="number" id="fixedExpenses" value="600" min="0" step="50">
+          <span class="unit" data-i18n="unit113">€</span>
+        </div>
+      </div>
+
+      <hr class="divider" style="margin:18px 0;">
+
+      <div class="results" style="grid-template-columns:1fr;">
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl78">Δόση δανείου</div>
+          <div class="value" id="fMotoLoan">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl79">Πάγια έξοδα οχήματος (ισοδύναμο/μήνα)</div>
+          <div class="value" id="fMotoFixed">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl80">Λειτουργικά έξοδα οχήματος/μήνα</div>
+          <div class="value" id="fMotoVar">—</div>
+        </div>
+        <div class="result-box big">
+          <div class="label" data-i18n="reslbl81">Συνολικό μηνιαίο κόστος οχήματος</div>
+          <div class="value" id="fMotoTotal">—</div>
+        </div>
+      </div>
+
+      <div class="results" style="grid-template-columns:1fr; margin-top:12px;">
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl82">Διαθέσιμο υπόλοιπο <span style="font-weight:400;">(χωρίς δώρα)</span></div>
+          <div class="value" id="fRemainNoBonus">—</div>
+          <div class="result-caption" id="capRemainNoBonus"></div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:14px;">
+        <label for="savingsPct" data-i18n="lbl20">Ποσοστό αποταμίευσης <span style="font-weight:400;">(από το διαθέσιμο υπόλοιπο, αν είναι θετικό)</span></label>
+        <div class="row">
+          <input type="number" id="savingsPct" value="0" min="0" max="100" step="5">
+          <span class="unit" data-i18n="unit114">%</span>
+        </div>
+      </div>
+
+      <div class="results" id="fSavingsGroup" style="grid-template-columns:1fr 1fr 1fr; margin-top:12px; display:none;">
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl84">Υπόλοιπο <span style="font-weight:400;">(πριν την αποταμίευση)</span></div>
+          <div class="value" id="fBeforeSavings">—</div>
+        </div>
+        <div class="result-box big">
+          <div class="label" data-i18n="reslbl85">Προτεινόμενη αποταμίευση <span style="font-weight:400;">(% επί του υπολοίπου χωρίς δώρα)</span></div>
+          <div class="value" id="fSavingsAmount">—</div>
+        </div>
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl86">Υπόλοιπο <span style="font-weight:400;">(μετά την αποταμίευση)</span></div>
+          <div class="value" id="fAfterSavings">—</div>
+        </div>
+      </div>
+
+      <div class="savings-banner" id="budgetBanner" style="margin-top:16px;"></div>
+      <div class="result-caption" id="capBudgetBanner" style="margin-top:6px;"></div>
+
+      <div id="budgetTips" style="margin-top:14px;"></div>
+    </div>
+    <div class="note" data-i18n="note94">Το "ισοδύναμο/μήνα" προκύπτει διαιρώντας τα ετήσια πάγια έξοδα (ασφάλεια, τέλη, service) διά 12, ώστε να αποτυπώνεται ρεαλιστικά η μηνιαία επιβάρυνση, ακόμη κι αν πληρώνονται εφάπαξ μία φορά τον χρόνο. "Χωρίς δώρα" = μόνο ο τακτικός καθαρός μισθός + έξτρα καθαρά, μείον σταθερά έξοδα και κόστος οχήματος. "Με δώρα" προσθέτει επιπλέον τον μέσο μηνιαίο όρο των καθαρών δώρων/επιδόματος (άθροισμα ÷ 12), για μια πιο ρεαλιστική εικόνα σε ετήσια βάση.</div>
+
+
+    <div class="card">
+      <h2 data-i18n="h239"><span class="num">3</span> Επενδυτικός Υπολογιστής</h2>
+      <div class="grid" style="margin-top:4px;">
+        <div>
+          <div class="field">
+            <label for="invStart" data-i18n="lbl21">Αρχικό ποσό</label>
+            <div class="row">
+              <input type="number" id="invStart" value="0" min="0" step="100">
+              <span class="unit" data-i18n="unit115">€</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="invYears" data-i18n="lbl22">Έτη επένδυσης</label>
+            <div class="row">
+              <input type="number" id="invYears" value="15" min="1" step="1">
+              <span class="unit" data-i18n="unit116">έτη</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="invContribution" data-i18n="lbl23">Επιπλέον καταθέσεις <span style="font-weight:400;">(συμπληρώνεται αυτόματα από την προτεινόμενη αποταμίευση — μπορείτε να το αλλάξετε)</span></label>
+            <div class="row">
+              <input type="number" id="invContribution" value="50" min="0" step="10">
+              <span class="unit" data-i18n="unit117">€</span>
+            </div>
+            <button type="button" id="invContribResyncBtn" class="resync-link" data-i18n="resync1">↺ Επανασύνδεση με την προτεινόμενη αποταμίευση</button>
+          </div>
+
+          <div class="field">
+            <label for="invContribFreq" data-i18n="lbl24">Συχνότητα καταθέσεων</label>
+            <select id="invContribFreq" class="date-input">
+              <option value="12" data-i18n="opt59">Μηνιαία</option>
+              <option value="4" data-i18n="opt60">Τριμηνιαία</option>
+              <option value="1" data-i18n="opt61">Ετήσια</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="invRate" data-i18n="lbl25">Υποθετικό ετήσιο ποσοστό απόδοσης</label>
+            <div class="row">
+              <input type="number" id="invRate" value="6" min="0" step="0.5">
+              <span class="unit" data-i18n="unit118">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="invCompound" data-i18n="lbl26">Ανατοκισμός</label>
+            <select id="invCompound" class="date-input">
+              <option value="1" data-i18n="opt62">Ετήσιος</option>
+              <option value="4" data-i18n="opt63">Τριμηνιαίος</option>
+              <option value="12" selected data-i18n="opt64">Μηνιαίος</option>
+              <option value="365" data-i18n="opt65">Ημερήσιος</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="results" style="grid-template-columns:1fr;">
+            <div class="result-box">
+              <div class="label" data-i18n="reslbl87">Συνολικές καταθέσεις</div>
+              <div class="value" id="invTotalContrib">—</div>
+            </div>
+            <div class="result-box">
+              <div class="label" data-i18n="reslbl88">Συνολικά κέρδη</div>
+              <div class="value" id="invTotalGrowth">—</div>
+            </div>
+            <div class="result-box big">
+              <div class="label" data-i18n="reslbl89">Τελικό υπόλοιπο</div>
+              <div class="value" id="invFinalBalance">—</div>
+            </div>
+          </div>
+
+          <div class="ledger-strip" style="margin-top:16px;">
+            <div class="legend">
+              <span><span class="swatch" style="background:var(--teal)"></span><span data-i18n="legend3">Καταθέσεις</span></span>
+              <span><span class="swatch" style="background:var(--brass-soft)"></span><span data-i18n="legend4">Κέρδη</span></span>
+            </div>
+            <div id="invLedgerBars" style="margin-top:10px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="note" data-i18n="note95">Υποθετικός υπολογισμός με σταθερό ετήσιο ποσοστό απόδοσης (χωρίς διακυμάνσεις αγοράς) και τακτικές καταθέσεις. Δεν λαμβάνει υπόψη φόρους, προμήθειες διαχείρισης ή πληθωρισμό. Μια επενδυτική στρατηγική τακτικών καταθέσεων δεν εγγυάται κέρδος ούτε προστατεύει από ζημία — τα πραγματικά αποτελέσματα θα διαφέρουν.</div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="h240"><span class="num">4</span> Αποθεματικό Διακοπών / Δραστηριοτήτων</h2>
+
+      <div class="field">
+        <label for="vacationSaved" data-i18n="lbl27">Ήδη αποταμιευμένα</label>
+        <div class="row">
+          <input type="number" id="vacationSaved" value="0" min="0" step="50">
+          <span class="unit" data-i18n="unit119">€</span>
+        </div>
+      </div>
+
+      <div class="results" style="grid-template-columns:1fr 1fr; margin-top:8px;">
+        <div class="result-box">
+          <div class="label" data-i18n="reslbl90">Προτεινόμενη προσθήκη <span style="font-weight:400;">(πλεόνασμα δώρων φέτος)</span></div>
+          <div class="value" id="vacationSuggestedAdd">—</div>
+        </div>
+        <div class="result-box big">
+          <div class="label" data-i18n="reslbl91">Νέο σύνολο αν το προσθέσεις</div>
+          <div class="value" id="vacationNewTotal">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="note" data-i18n="note96">Το αποθεματικό διακοπών λειτουργεί σαν τα δώρα/επίδομα αδείας: δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού, αλλά ένα ξεχωριστό ποσό που συσσωρεύεται από το πλεόνασμα των δώρων (αφού καλυφθούν τα πάγια έξοδα οχήματος) και μπορεί να ξοδευτεί ελεύθερα σε διακοπές, ταξίδια ή άλλες δραστηριότητες. Το "ήδη αποταμιευμένα" το ενημερώνετε εσείς χειροκίνητα κάθε φορά που προσθέτετε ή ξοδεύετε από αυτό.</div>
+  </div>
+  <!-- /tabBudget -->
+
+  <div id="tabMoto" style="display:none;">
+    <div class="grid">
+      <div class="card">
+        <h2 data-i18n="h241"><span class="num">8</span> Πάγια Έξοδα Οχήματος <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(ετήσια)</span></h2>
+
+        <div class="field">
+          <label for="motoInsurance" data-i18n="lbl28">Ασφάλεια</label>
+          <div class="row">
+            <input type="number" id="motoInsurance" value="0" min="0" step="10">
+            <span class="unit" data-i18n="unit120">€/έτος</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="motoRoadTax" data-i18n="lbl29">Τέλη κυκλοφορίας</label>
+          <div class="row">
+            <input type="number" id="motoRoadTax" value="0" min="0" step="5">
+            <span class="unit" data-i18n="unit121">€/έτος</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="motoService" data-i18n="lbl30">Service / συντήρηση</label>
+          <div class="row">
+            <input type="number" id="motoService" value="0" min="0" step="10">
+            <span class="unit" data-i18n="unit122">€/έτος</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 data-i18n="h242"><span class="num">9</span> Λειτουργικά Έξοδα <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(μηνιαία)</span></h2>
+
+        <div class="field">
+          <label for="motoFuel" data-i18n="lbl31">Καύσιμα</label>
+          <div class="row">
+            <input type="number" id="motoFuel" value="0" min="0" step="5">
+            <span class="unit" data-i18n="unit123">€/μήνα</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="motoParking" data-i18n="lbl32">Πάρκινγκ</label>
+          <div class="row">
+            <input type="number" id="motoParking" value="0" min="0" step="5">
+            <span class="unit" data-i18n="unit124">€/μήνα</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="motoOther" data-i18n="lbl33">Λοιπά (πλυντήριο, εξαρτήματα κ.λπ.)</label>
+          <div class="row">
+            <input type="number" id="motoOther" value="0" min="0" step="5">
+            <span class="unit" data-i18n="unit125">€/μήνα</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /tabMoto -->
+
+  <div id="printReport" class="print-only"></div>
+
+</div>
+
+
+<script>
+
+// --- Language / i18n ---
+const TRANSLATIONS = {
+  el: {
+  "eyebrow1": "Μισθός, Προϋπολογισμός & Δάνειο",
+  "h1title": "Βιβλίο Εσόδων-Εξόδων",
+  "btn43": "Αποθήκευση",
+  "btn44": "Προεπιλεγμένες τιμές",
+  "btn45": "Εκτύπωση αναφοράς",
+  "sumlbl1": "Καθαρός μισθός",
+  "sumlbl2": "Προτ. αποταμίευση",
+  "sumlbl3": "Δόση δανείου",
+  "sumlbl4": "Διαθέσιμο υπόλοιπο",
+  "sumlbl5": "Υπόλοιπο μετά την αποταμίευση",
+  "btn46": "Μισθός & Δώρα",
+  "btn47": "Προϋπολογισμός",
+  "btn48": "Δάνειο",
+  "btn49": "Έξοδα Οχήματος",
+  "h234": "<span class=\"num\">5</span> Στοιχεία Δανείου",
+  "lbl1": "Ποσό δανείου",
+  "unit97": "€",
+  "lbl2": "Προκαταβολή",
+  "unit98": "€",
+  "lbl3": "Διάρκεια αποπληρωμής",
+  "unit99": "δόσεις",
+  "lbl4": "Ετήσιο επιτόκιο",
+  "unit100": "%",
+  "btn50": "Καθαρισμός πεδίων δανείου <span style=\"font-weight:400;\">(εκτός επιτοκίου)</span>",
+  "h235": "<span class=\"num\">6</span> Αποτελέσματα",
+  "reslbl66": "Μηνιαία δόση",
+  "reslbl67": "Χρηματοδοτούμενο κεφάλαιο",
+  "reslbl68": "Σύνολο τόκων",
+  "reslbl69": "Τελικό συνολικό κόστος",
+  "reslbl70": "Αριθμός δόσεων",
+  "legend1": "Κεφάλαιο",
+  "legend2": "Τόκοι",
+  "btn51": "Ετήσια προβολή",
+  "btn52": "Μηνιαία προβολή",
+  "lbl5": "Φίλτρο μηνών",
+  "unit101": "από δόση",
+  "unit102": "έως δόση",
+  "th126": "Δόση",
+  "th127": "Ποσό δόσης",
+  "th128": "Τόκοι",
+  "th129": "Κεφάλαιο",
+  "th130": "Υπόλοιπο",
+  "h236": "<span class=\"num\">7</span> Μερική Αποπληρωμή",
+  "lbl6": "Μήνας εφαρμογής έκτακτης καταβολής",
+  "unit103": "μήνας",
+  "lbl7": "Ποσό μερικής αποπληρωμής",
+  "unit104": "€",
+  "lbl8": "Τι θέλετε να πετύχει η καταβολή;",
+  "btn53": "Μείωση διάρκειας",
+  "btn54": "Μείωση δόσης",
+  "btn55": "ΥΠΟΛΟΓΙΣΜΟΣ ΣΕΝΑΡΙΟΥ",
+  "h3a": "Χωρίς έκτακτη καταβολή",
+  "rowlbl1": "Δόση",
+  "rowlbl2": "Υπόλοιπες δόσεις",
+  "rowlbl3": "Τόκοι υπολοίπου διάρκειας",
+  "h3b": "Με έκτακτη καταβολή",
+  "rowlbl4": "Δόση",
+  "rowlbl5": "Υπόλοιπες δόσεις",
+  "rowlbl6": "Τόκοι υπολοίπου διάρκειας",
+  "note92": "Η προσομοίωση υπολογίζει το ανεξόφλητο κεφάλαιο τον μήνα εφαρμογής, αφαιρεί το ποσό της έκτακτης καταβολής και είτε διατηρεί σταθερή τη δόση (μειώνοντας τη διάρκεια) είτε διατηρεί σταθερή την υπόλοιπη διάρκεια (μειώνοντας τη δόση). Οι υπολογισμοί είναι ενδεικτικοί — δεν λαμβάνουν υπόψη έξοδα, ασφάλιστρα ή ενδεχόμενες προμήθειες πρόωρης αποπληρωμής.",
+  "h237": "<span class=\"num\">1</span> Μισθός & Δώρα <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(σύστημα 14 μισθών)</span>",
+  "lbl9": "Μικτός μηνιαίος μισθός (τακτικός)",
+  "unit105": "€",
+  "lbl10": "Ημερομηνία πρόσληψης",
+  "lbl11": "Ασφαλιστικές κρατήσεις εργαζομένου",
+  "unit106": "%",
+  "lbl12": "Βασική ετήσια μείωση φόρου <span style=\"font-weight:400;\">(777€ χωρίς τέκνα — προσαρμόστε βάσει τέκνων, μειώνεται αυτόματα με το εισόδημα)</span>",
+  "unit107": "€/έτος",
+  "lbl13": "Ηλικία <span style=\"font-weight:400;\">(επηρεάζει τη φορολογική κλίμακα)</span>",
+  "opt56": "Έως 25 ετών",
+  "opt57": "26 έως 30 ετών",
+  "opt58": "Άνω των 30 ετών",
+  "lbl14": "Ώρες υπερεργασίας <span style=\"font-weight:400;\">(μηνιαίες, +20%)</span>",
+  "unit108": "ώρες",
+  "lbl15": "Ώρες αργίας <span style=\"font-weight:400;\">(μηνιαίες, +75%)</span>",
+  "unit109": "ώρες",
+  "lbl16": "Ώρες υπερωρίας <span style=\"font-weight:400;\">(μηνιαίες, +40%)</span>",
+  "unit110": "ώρες",
+  "lbl17": "Έξτρα καθαρά μηνιαία <span style=\"font-weight:400;\">(π.χ. Ticket Restaurant)</span>",
+  "unit111": "€",
+  "reslbl71": "Μικτός μηνιαίος μισθός",
+  "reslbl72": "Κρατήσεις ΕΦΚΑ",
+  "reslbl73": "Φορολογητέος μισθός",
+  "reslbl74": "Μηνιαίος φόρος εισοδήματος",
+  "reslbl75": "Καθαρός μηνιαίος μισθός (τακτικός)",
+  "reslbl76": "Πρόσθετες αμοιβές <span style=\"font-weight:400;\">(υπερεργασία/αργία/υπερωρία, καθαρό)</span>",
+  "reslbl77": "Σύνολο καθαρών μηνιαίων αποδοχών",
+  "th131": "Παροχή (φετινή περίοδος)",
+  "th132": "Μικτό",
+  "th133": "Καθαρό",
+  "th134": "Ετήσια εικόνα (14 μισθοί)",
+  "th135": "Ποσό",
+  "note93": "<p>Ενδεικτικός υπολογισμός με βάση την ισχύουσα φορολογική κλίμακα μισθωτών, η οποία διαφοροποιείται ανάλογα με την ηλικία: <strong>άνω των 30</strong> — 9% έως 10.000€ · 20% από 10.000,01 έως 20.000€ · 26% από 20.000,01 έως 30.000€ · 34% από 30.000,01 έως 40.000€ · 39% από 40.000,01 έως 60.000€ · 44% άνω των 60.000€. <strong>26 έως 30 ετών</strong> — 9% flat έως 20.000€, μετά ίδιο με την βασική κλίμακα (26%/34%/39%/44%). <strong>Έως 25 ετών</strong> — μηδενικός φόρος έως 20.000€, μετά ίδιο με την βασική κλίμακα. Η επιλογή ηλικίας δεν επηρεάζει τις κρατήσεις ΕΦΚΑ ή τη μείωση φόρου, μόνο την κλίμακα φόρου.</p><p>Η ετήσια μείωση φόρου που εισάγετε ισχύει ακέραιη για φορολογητέο εισόδημα έως 12.000€ και μειώνεται κατά 20€ για κάθε 1.000€ επιπλέον εισοδήματος — γι' αυτό υπολογίζεται αυτόματα ξανά για οποιοδήποτε μικτό μισθό βάλετε.</p><p>Τα δώρα/επίδομα υπολογίζονται αναλογικά με βάση τις ημέρες απασχόλησης εντός της αντίστοιχης περιόδου (1/5-31/12 για Χριστούγεννα και Επίδομα Αδείας, 1/1-30/4 για Πάσχα) και φορολογούνται με τον ίδιο μέσο συντελεστή του τακτικού μισθού.</p><p>Για τις πρόσθετες αμοιβές (υπερεργασία: ωρομίσθιο +20% · υπερωρία: ωρομίσθιο +40% · αργία: μόνο η προσαύξηση 75% του ωρομισθίου, αφού η βασική αμοιβή της ημέρας καλύπτεται ήδη από τον μηνιαίο μισθό — όπου ωρομίσθιο = μικτός μισθός/25/6,667) εφαρμόζεται πάγιος συντελεστής παρακράτησης 20% αντί της κλίμακας, χωρίς επιπλέον ασφαλιστικές κρατήσεις (σύμφωνα με το άρθρο 41 του Ν.5184/2025 για πλήρη απασχόληση) — αυτός ο υπολογισμός κρατήθηκε ξεχωριστός και δεν επηρεάζει τις κρατήσεις ΕΦΚΑ ή τον προοδευτικό φόρο του τακτικού μισθού.</p><p>Για να διατηρήσετε ακέραιη τη μείωση φόρου, θυμηθείτε ότι απαιτείται να καλύψετε το αντίστοιχο ποσό ηλεκτρονικών συναλλαγών (κάρτες/e-banking) μέσα στο έτος. Η ακριβής μισθοδοσία σας ενδέχεται να διαφέρει ελαφρώς — για ακριβή στοιχεία συμβουλευτείτε τον υπεύθυνο μισθοδοσίας σας.</p>",
+  "h238": "<span class=\"num\">2</span> Προσωπικός Προϋπολογισμός",
+  "lbl18": "Μηνιαίο καθαρό εισόδημα <span style=\"font-weight:400;\">(συμπληρώνεται αυτόματα από τον καθαρό μηνιαίο μισθό — μπορείτε να το αλλάξετε)</span>",
+  "unit112": "€",
+  "lbl19": "Λοιπά σταθερά μηνιαία έξοδα <span style=\"font-weight:400;\">(ενοίκιο, λογαριασμοί, λοιπά δάνεια κ.λπ.)</span>",
+  "unit113": "€",
+  "reslbl78": "Δόση δανείου",
+  "reslbl79": "Πάγια έξοδα οχήματος (ισοδύναμο/μήνα)",
+  "reslbl80": "Λειτουργικά έξοδα οχήματος/μήνα",
+  "reslbl81": "Συνολικό μηνιαίο κόστος οχήματος",
+  "reslbl82": "Διαθέσιμο υπόλοιπο <span style=\"font-weight:400;\">(χωρίς δώρα)</span>",
+  "reslbl83": "Διαθέσιμο υπόλοιπο <span style=\"font-weight:400;\">(με δώρα)</span>",
+  "lbl20": "Ποσοστό αποταμίευσης <span style=\"font-weight:400;\">(από το διαθέσιμο υπόλοιπο, αν είναι θετικό)</span>",
+  "unit114": "%",
+  "reslbl84": "Υπόλοιπο <span style=\"font-weight:400;\">(πριν την αποταμίευση)</span>",
+  "reslbl85": "Προτεινόμενη αποταμίευση <span style=\"font-weight:400;\">(% επί του υπολοίπου χωρίς δώρα)</span>",
+  "reslbl86": "Υπόλοιπο <span style=\"font-weight:400;\">(μετά την αποταμίευση)</span>",
+  "note94": "Το \"ισοδύναμο/μήνα\" προκύπτει διαιρώντας τα ετήσια πάγια έξοδα (ασφάλεια, τέλη, service) διά 12, ώστε να αποτυπώνεται ρεαλιστικά η μηνιαία επιβάρυνση, ακόμη κι αν πληρώνονται εφάπαξ μία φορά τον χρόνο. \"Χωρίς δώρα\" = μόνο ο τακτικός καθαρός μισθός + έξτρα καθαρά, μείον σταθερά έξοδα και κόστος οχήματος. \"Με δώρα\" προσθέτει επιπλέον τον μέσο μηνιαίο όρο των καθαρών δώρων/επιδόματος (άθροισμα ÷ 12), για μια πιο ρεαλιστική εικόνα σε ετήσια βάση.",
+  "h239": "<span class=\"num\">3</span> Επενδυτικός Υπολογιστής",
+  "lbl21": "Αρχικό ποσό",
+  "unit115": "€",
+  "lbl22": "Έτη επένδυσης",
+  "unit116": "έτη",
+  "lbl23": "Επιπλέον καταθέσεις <span style=\"font-weight:400;\">(συμπληρώνεται αυτόματα από την προτεινόμενη αποταμίευση — μπορείτε να το αλλάξετε)</span>",
+  "unit117": "€",
+  "resync1": "\u21ba Επανασύνδεση με την προτεινόμενη αποταμίευση",
+  "lbl24": "Συχνότητα καταθέσεων",
+  "opt59": "Μηνιαία",
+  "opt60": "Τριμηνιαία",
+  "opt61": "Ετήσια",
+  "lbl25": "Υποθετικό ετήσιο ποσοστό απόδοσης",
+  "unit118": "%",
+  "lbl26": "Ανατοκισμός",
+  "opt62": "Ετήσιος",
+  "opt63": "Τριμηνιαίος",
+  "opt64": "Μηνιαίος",
+  "opt65": "Ημερήσιος",
+  "reslbl87": "Συνολικές καταθέσεις",
+  "reslbl88": "Συνολικά κέρδη",
+  "reslbl89": "Τελικό υπόλοιπο",
+  "legend3": "Καταθέσεις",
+  "legend4": "Κέρδη",
+  "note95": "Υποθετικός υπολογισμός με σταθερό ετήσιο ποσοστό απόδοσης (χωρίς διακυμάνσεις αγοράς) και τακτικές καταθέσεις. Δεν λαμβάνει υπόψη φόρους, προμήθειες διαχείρισης ή πληθωρισμό. Μια επενδυτική στρατηγική τακτικών καταθέσεων δεν εγγυάται κέρδος ούτε προστατεύει από ζημία — τα πραγματικά αποτελέσματα θα διαφέρουν.",
+  "h240": "<span class=\"num\">4</span> Αποθεματικό Διακοπών / Δραστηριοτήτων",
+  "lbl27": "Ήδη αποταμιευμένα",
+  "unit119": "€",
+  "reslbl90": "Προτεινόμενη προσθήκη <span style=\"font-weight:400;\">(πλεόνασμα δώρων φέτος)</span>",
+  "reslbl91": "Νέο σύνολο αν το προσθέσεις",
+  "note96": "Το αποθεματικό διακοπών λειτουργεί σαν τα δώρα/επίδομα αδείας: δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού, αλλά ένα ξεχωριστό ποσό που συσσωρεύεται από το πλεόνασμα των δώρων (αφού καλυφθούν τα πάγια έξοδα οχήματος) και μπορεί να ξοδευτεί ελεύθερα σε διακοπές, ταξίδια ή άλλες δραστηριότητες. Το \"ήδη αποταμιευμένα\" το ενημερώνετε εσείς χειροκίνητα κάθε φορά που προσθέτετε ή ξοδεύετε από αυτό.",
+  "h241": "<span class=\"num\">8</span> Πάγια Έξοδα Οχήματος <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(ετήσια)</span>",
+  "lbl28": "Ασφάλεια",
+  "unit120": "€/έτος",
+  "lbl29": "Τέλη κυκλοφορίας",
+  "unit121": "€/έτος",
+  "lbl30": "Service / συντήρηση",
+  "unit122": "€/έτος",
+  "h242": "<span class=\"num\">9</span> Λειτουργικά Έξοδα <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(μηνιαία)</span>",
+  "lbl31": "Καύσιμα",
+  "unit123": "€/μήνα",
+  "lbl32": "Πάρκινγκ",
+  "unit124": "€/μήνα",
+  "lbl33": "Λοιπά (πλυντήριο, εξαρτήματα κ.λπ.)",
+  "unit125": "€/μήνα",
+  "hireDatePh": "ηη/μμ/εεεε",
+  "tdlbl1": "Συνολικό φορολογητέο εισόδημα",
+  "tdlbl2": "Αρχικός φόρος κλίμακας",
+  "tdlbl3": "Ετήσια μείωση φόρου (μετά την αναλογική μείωση)",
+  "tdlbl4": "Τελικός ετήσιος φόρος",
+  "tdlbl5": "Απαιτούμενες ηλεκτρονικές συναλλαγές (30%)",
+  "tdlbl6": "Δώρο Χριστουγέννων",
+  "tdlbl7": "Δώρο Πάσχα",
+  "tdlbl8": "Επίδομα Αδείας"
+},
+  en: {
+  "eyebrow1": "Salary, Budget & Loan",
+  "h1title": "Income & Expense Ledger",
+  "btn43": "Save",
+  "btn44": "Reset to Defaults",
+  "btn45": "Print Report",
+  "sumlbl1": "Net Salary",
+  "sumlbl2": "Sugg. Savings",
+  "sumlbl3": "Loan Payment",
+  "sumlbl4": "Available Balance",
+  "sumlbl5": "Balance After Savings",
+  "btn46": "Salary & Bonuses",
+  "btn47": "Budget",
+  "btn48": "Loan",
+  "btn49": "Vehicle Expenses",
+  "h234": "<span class=\"num\">5</span> Loan Details",
+  "lbl1": "Loan Amount",
+  "unit97": "€",
+  "lbl2": "Down Payment",
+  "unit98": "€",
+  "lbl3": "Repayment Term",
+  "unit99": "installments",
+  "lbl4": "Annual Interest Rate",
+  "unit100": "%",
+  "btn50": "Clear Loan Fields <span style=\"font-weight:400;\">(except interest rate)</span>",
+  "h235": "<span class=\"num\">6</span> Results",
+  "reslbl66": "Monthly Payment",
+  "reslbl67": "Financed Principal",
+  "reslbl68": "Total Interest",
+  "reslbl69": "Total Final Cost",
+  "reslbl70": "Number of Installments",
+  "legend1": "Principal",
+  "legend2": "Interest",
+  "btn51": "Yearly View",
+  "btn52": "Monthly View",
+  "lbl5": "Month Filter",
+  "unit101": "from installment",
+  "unit102": "to installment",
+  "th126": "Inst.",
+  "th127": "Payment Amount",
+  "th128": "Interest",
+  "th129": "Principal",
+  "th130": "Balance",
+  "h236": "<span class=\"num\">7</span> Partial Prepayment",
+  "lbl6": "Month of Extra Payment",
+  "unit103": "month",
+  "lbl7": "Prepayment Amount",
+  "unit104": "€",
+  "lbl8": "What do you want the payment to achieve?",
+  "btn53": "Shorten Term",
+  "btn54": "Lower Payment",
+  "btn55": "CALCULATE SCENARIO",
+  "h3a": "Without Extra Payment",
+  "rowlbl1": "Payment",
+  "rowlbl2": "Remaining Installments",
+  "rowlbl3": "Interest over Remaining Term",
+  "h3b": "With Extra Payment",
+  "rowlbl4": "Payment",
+  "rowlbl5": "Remaining Installments",
+  "rowlbl6": "Interest over Remaining Term",
+  "note92": "The simulation calculates the outstanding principal in the month the payment is applied, subtracts the extra payment amount, and either keeps the payment fixed (shortening the term) or keeps the remaining term fixed (lowering the payment). The figures are indicative -- they do not account for fees, insurance, or possible early-repayment charges.",
+  "h237": "<span class=\"num\">1</span> Salary & Bonuses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(14-payment system)</span>",
+  "lbl9": "Gross Monthly Salary (Regular)",
+  "unit105": "€",
+  "lbl10": "Hire Date",
+  "lbl11": "Employee Social Security Contributions",
+  "unit106": "%",
+  "lbl12": "Base Annual Tax Credit <span style=\"font-weight:400;\">(EUR777 with no children -- adjust based on children, tapers automatically with income)</span>",
+  "unit107": "€/yr",
+  "lbl13": "Age <span style=\"font-weight:400;\">(affects the tax scale)</span>",
+  "opt56": "Up to 25 years old",
+  "opt57": "26 to 30 years old",
+  "opt58": "Over 30 years old",
+  "lbl14": "Overwork Hours <span style=\"font-weight:400;\">(monthly, +20%)</span>",
+  "unit108": "hrs",
+  "lbl15": "Holiday-Work Hours <span style=\"font-weight:400;\">(monthly, +75%)</span>",
+  "unit109": "hrs",
+  "lbl16": "Overtime Hours <span style=\"font-weight:400;\">(monthly, +40%)</span>",
+  "unit110": "hrs",
+  "lbl17": "Extra Net Monthly <span style=\"font-weight:400;\">(e.g. Ticket Restaurant)</span>",
+  "unit111": "€",
+  "reslbl71": "Gross Monthly Salary",
+  "reslbl72": "Social Security Contributions",
+  "reslbl73": "Taxable Salary",
+  "reslbl74": "Monthly Income Tax",
+  "reslbl75": "Net Monthly Salary (Regular)",
+  "reslbl76": "Extra Pay <span style=\"font-weight:400;\">(overwork/holiday/overtime, net)</span>",
+  "reslbl77": "Total Net Monthly Earnings",
+  "th131": "Benefit (this years period)",
+  "th132": "Gross",
+  "th133": "Net",
+  "th134": "Annual Picture (14 salaries)",
+  "th135": "Amount",
+  "note93": "<p>Indicative calculation based on the current employee tax scale, which varies by age: <strong>over 30</strong> -- 9% up to EUR10,000, 20% from EUR10,000.01 to EUR20,000, 26% from EUR20,000.01 to EUR30,000, 34% from EUR30,000.01 to EUR40,000, 39% from EUR40,000.01 to EUR60,000, 44% above EUR60,000. <strong>26 to 30 years old</strong> -- flat 9% up to EUR20,000, then same as the base scale (26%/34%/39%/44%). <strong>Up to 25 years old</strong> -- zero tax up to EUR20,000, then same as the base scale. The age selection only affects the tax scale, not social security contributions or the tax credit.</p><p>The annual tax credit you enter applies in full for taxable income up to EUR12,000 and decreases by EUR20 for every EUR1,000 of extra income -- that is why it is automatically recalculated for whatever gross salary you enter.</p><p>Bonuses/allowances are calculated proportionally based on days employed within the relevant period (5/1 to 12/31 for the Christmas bonus and Leave Allowance, 1/1 to 4/30 for Easter) and are taxed at the same average rate as the regular salary.</p><p>For extra pay (overwork: hourly rate +20%, overtime: hourly rate +40%, holiday work: only the 75% supplement, since the base pay for that day is already covered by the monthly salary -- where hourly rate = gross salary / 25 / 6.667), a flat 20% withholding applies instead of the scale, with no extra social security contributions (per Article 41 of Law 5184/2025 for full-time employment) -- this calculation was kept separate and does not affect the regular salary's social security contributions or progressive tax.</p><p>To keep the full tax credit, remember you need to cover the corresponding amount in electronic payments (cards/e-banking) during the year. Your actual payroll may differ slightly -- for exact figures, consult your payroll department.</p>",
+  "h238": "<span class=\"num\">2</span> Personal Budget",
+  "lbl18": "Net Monthly Income <span style=\"font-weight:400;\">(auto-filled from net monthly salary -- you can change it)</span>",
+  "unit112": "€",
+  "lbl19": "Other Fixed Monthly Expenses <span style=\"font-weight:400;\">(rent, bills, other loans, etc.)</span>",
+  "unit113": "€",
+  "reslbl78": "Loan Payment",
+  "reslbl79": "Fixed Vehicle Expenses (monthly equiv.)",
+  "reslbl80": "Operating Vehicle Expenses/month",
+  "reslbl81": "Total Monthly Vehicle Cost",
+  "reslbl82": "Available Balance <span style=\"font-weight:400;\">(without bonuses)</span>",
+  "reslbl83": "Available Balance <span style=\"font-weight:400;\">(with bonuses)</span>",
+  "lbl20": "Savings Percentage <span style=\"font-weight:400;\">(of the available balance, if positive)</span>",
+  "unit114": "%",
+  "reslbl84": "Balance <span style=\"font-weight:400;\">(before savings)</span>",
+  "reslbl85": "Suggested Savings <span style=\"font-weight:400;\">(% of balance without bonuses)</span>",
+  "reslbl86": "Balance <span style=\"font-weight:400;\">(after savings)</span>",
+  "note94": "The monthly equivalent comes from dividing annual fixed expenses (insurance, road tax, service) by 12, to realistically reflect the monthly burden even though they are paid once a year. Without bonuses = only the regular net salary + extra net, minus fixed expenses and vehicle cost. With bonuses additionally adds the average monthly share of net bonuses/allowance (total divided by 12), for a more realistic year-round picture.",
+  "h239": "<span class=\"num\">3</span> Investment Calculator",
+  "lbl21": "Starting Amount",
+  "unit115": "€",
+  "lbl22": "Years to Invest",
+  "unit116": "yrs",
+  "lbl23": "Additional Contributions <span style=\"font-weight:400;\">(auto-filled from the suggested savings -- you can change it)</span>",
+  "unit117": "€",
+  "resync1": "\u21ba Re-sync with suggested savings",
+  "lbl24": "Contribution Frequency",
+  "opt59": "Monthly",
+  "opt60": "Quarterly",
+  "opt61": "Annually",
+  "lbl25": "Hypothetical Annual Rate of Return",
+  "unit118": "%",
+  "lbl26": "Compounding",
+  "opt62": "Annually",
+  "opt63": "Quarterly",
+  "opt64": "Monthly",
+  "opt65": "Daily",
+  "reslbl87": "Total Contributions",
+  "reslbl88": "Total Growth",
+  "reslbl89": "Final Balance",
+  "legend3": "Contributions",
+  "legend4": "Growth",
+  "note95": "Hypothetical calculation with a fixed annual rate of return (no market fluctuation) and regular contributions. Does not account for taxes, management fees, or inflation. A program of regular investing does not guarantee a profit or protect against a loss -- actual results will vary.",
+  "h240": "<span class=\"num\">4</span> Vacation / Activities Fund",
+  "lbl27": "Already Saved",
+  "unit119": "€",
+  "reslbl90": "Suggested Addition <span style=\"font-weight:400;\">(this years bonus surplus)</span>",
+  "reslbl91": "New Total If Added",
+  "note96": "The vacation fund works like the bonuses/leave allowance: it is not part of the regular monthly budget, but a separate amount that builds up from the bonus surplus (after covering fixed vehicle expenses) and can be spent freely on vacations, trips, or other activities. You update already saved manually each time you add to or spend from it.",
+  "h241": "<span class=\"num\">8</span> Fixed Vehicle Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(annual)</span>",
+  "lbl28": "Insurance",
+  "unit120": "€/yr",
+  "lbl29": "Road Tax",
+  "unit121": "€/yr",
+  "lbl30": "Service / Maintenance",
+  "unit122": "€/yr",
+  "h242": "<span class=\"num\">9</span> Operating Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(monthly)</span>",
+  "lbl31": "Fuel",
+  "unit123": "€/mo",
+  "lbl32": "Parking",
+  "unit124": "€/mo",
+  "lbl33": "Other (car wash, parts, etc.)",
+  "unit125": "€/mo",
+  "hireDatePh": "dd/mm/yyyy",
+  "tdlbl1": "Total Taxable Income",
+  "tdlbl2": "Initial Scale Tax",
+  "tdlbl3": "Annual Tax Credit (after proportional reduction)",
+  "tdlbl4": "Final Annual Tax",
+  "tdlbl5": "Required Electronic Transactions (30%)",
+  "tdlbl6": "Christmas Bonus",
+  "tdlbl7": "Easter Bonus",
+  "tdlbl8": "Leave Allowance"
+}
+};
+let currentLang = 'el';
+
+function applyStaticTranslations(){
+  const dict = TRANSLATIONS[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if(dict[key] !== undefined) el.placeholder = dict[key];
+  });
+  document.documentElement.lang = currentLang;
+  document.title = currentLang === 'en' ? 'Income & Expense Ledger' : 'Βιβλίο Εσόδων-Εξόδων';
+  const toggleBtn = document.getElementById('langToggleBtn');
+  if(toggleBtn) toggleBtn.textContent = currentLang === 'el' ? '\uD83C\uDF10 EN' : '\uD83C\uDF10 EL';
+}
+
+function setLanguage(lang){
+  currentLang = lang;
+  try { localStorage.setItem('vivlio-lang', lang); } catch(err) {}
+  applyStaticTranslations();
+  if(typeof updateStampDate === 'function') updateStampDate();
+  // re-run all computations so dynamically generated text (tips, banners, badges, print report)
+  // regenerates in the newly selected language
+  recompute();
+  recomputeSalary();
+  recomputeBudget();
+  recomputeInvestment();
+}
+
+function loadSavedLanguage(){
+  let lang = 'el';
+  try { lang = localStorage.getItem('vivlio-lang') || 'el'; } catch(err) {}
+  currentLang = lang;
+  applyStaticTranslations();
+  if(typeof updateStampDate === 'function') updateStampDate();
+}
+
+const euro = v => v.toLocaleString(currentLang==='en' ? 'en-IE' : 'el-GR', {style:'currency', currency:'EUR', maximumFractionDigits:0});
+const euroDec = v => v.toLocaleString(currentLang==='en' ? 'en-IE' : 'el-GR', {style:'currency', currency:'EUR', minimumFractionDigits:2, maximumFractionDigits:2});
+
+function updateStampDate(){
+  document.getElementById('stampDate').textContent = (currentLang==='en' ? 'Calculation date: ' : 'Ημ/νία υπολογισμού: ') + new Date().toLocaleDateString(currentLang==='en' ? 'en-GB' : 'el-GR');
+}
+updateStampDate();
+
+function getInputs(){
+  const amount = parseFloat(document.getElementById('amount').value)||0;
+  const down = parseFloat(document.getElementById('down').value)||0;
+  const months = Math.max(Math.round(parseFloat(document.getElementById('installments').value)||1), 1);
+  const rate = parseFloat(document.getElementById('rate').value)||0;
+  const principal = Math.max(amount - down, 0);
+  const r = (rate/100)/12;
+  return {amount, down, rate, principal, months, r};
+}
+
+function monthlyPayment(principal, r, months){
+  if(months<=0) return 0;
+  if(r === 0) return principal/months;
+  return principal * r / (1 - Math.pow(1+r, -months));
+}
+
+function buildSchedule(principal, r, months, M){
+  let balance = principal;
+  const schedule = [];
+  for(let i=1;i<=months && balance > 0.01;i++){
+    const interest = balance*r;
+    let principalPaid = M - interest;
+    if(principalPaid > balance) principalPaid = balance;
+    balance -= principalPaid;
+    schedule.push({month:i, interest, principalPaid, balance});
+  }
+  return schedule;
+}
+
+function renderLedger(schedule){
+  const container = document.getElementById('ledgerBars');
+  container.innerHTML = '';
+  // group by year
+  const years = {};
+  schedule.forEach(row=>{
+    const y = Math.ceil(row.month/12);
+    if(!years[y]) years[y] = {principal:0, interest:0};
+    years[y].principal += row.principalPaid;
+    years[y].interest += row.interest;
+  });
+  const maxTotal = Math.max(...Object.values(years).map(y=>y.principal+y.interest), 1);
+  Object.keys(years).forEach(y=>{
+    const {principal, interest} = years[y];
+    const total = principal+interest;
+    const row = document.createElement('div');
+    row.className = 'ledger-row';
+    const widthPct = (total/maxTotal)*100;
+    row.innerHTML = `
+      <span class="yr">${currentLang==='en' ? 'Y' : 'Ε'}${y}</span>
+      <div class="bar" style="width:${widthPct}%">
+        <div class="principal" style="width:${(principal/total*100)||0}%"></div>
+        <div class="interest" style="width:${(interest/total*100)||0}%"></div>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function recompute(){
+  const {principal, months, r} = getInputs();
+  const M = monthlyPayment(principal, r, months);
+  const schedule = buildSchedule(principal, r, months, M);
+  const totalInterest = schedule.reduce((s,row)=>s+row.interest,0);
+  const totalPaid = totalInterest + principal;
+
+  document.getElementById('rMonthly').textContent = euroDec(M);
+  document.getElementById('rPrincipal').textContent = euro(principal);
+  document.getElementById('rInterest').textContent = euro(totalInterest);
+  document.getElementById('rTotal').textContent = euro(totalPaid);
+  document.getElementById('rMonths').textContent = schedule.length + (currentLang==='en' ? ' installments' : ' δόσεις');
+
+  renderLedger(schedule);
+  currentSchedule = schedule;
+  const filterTo = document.getElementById('filterTo');
+  if(parseInt(filterTo.value) > schedule.length || filterTo.dataset.touched !== 'true'){
+    filterTo.value = Math.min(12, schedule.length);
+  }
+  document.getElementById('filterFrom').max = schedule.length;
+  filterTo.max = schedule.length;
+  if(viewMode==='monthly') renderMonthlyTable();
+  lastMonthlyPayment = M;
+  if(typeof recomputeBudget === 'function') recomputeBudget();
+  if(typeof updateMotoTabAvailability === 'function') updateMotoTabAvailability();
+  return {principal, months, r, M, schedule};
+}
+
+let currentSchedule = [];
+let viewMode = 'yearly';
+
+document.getElementById('viewYearly').addEventListener('click', ()=>{
+  viewMode='yearly';
+  document.getElementById('viewYearly').classList.add('active');
+  document.getElementById('viewMonthly').classList.remove('active');
+  document.getElementById('yearlyView').style.display='block';
+  document.getElementById('monthlyView').style.display='none';
+});
+document.getElementById('viewMonthly').addEventListener('click', ()=>{
+  viewMode='monthly';
+  document.getElementById('viewMonthly').classList.add('active');
+  document.getElementById('viewYearly').classList.remove('active');
+  document.getElementById('yearlyView').style.display='none';
+  document.getElementById('monthlyView').style.display='block';
+  renderMonthlyTable();
+});
+document.getElementById('filterTo').addEventListener('input', function(){ this.dataset.touched = 'true'; });
+['filterFrom','filterTo'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', renderMonthlyTable);
+});
+
+function renderMonthlyTable(){
+  const body = document.getElementById('amortBody');
+  body.innerHTML = '';
+  if(!currentSchedule.length) return;
+  let from = Math.max(parseInt(document.getElementById('filterFrom').value)||1, 1);
+  let to = Math.min(parseInt(document.getElementById('filterTo').value)||currentSchedule.length, currentSchedule.length);
+  if(from > to) [from, to] = [to, from];
+  currentSchedule.filter(row=>row.month>=from && row.month<=to).forEach(row=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${row.month}</td><td>${euroDec(row.principalPaid+row.interest)}</td><td>${euroDec(row.interest)}</td><td>${euroDec(row.principalPaid)}</td><td>${euroDec(Math.max(row.balance,0))}</td>`;
+    body.appendChild(tr);
+  });
+}
+let prepMode = 'shorten';
+document.getElementById('modeShorten').addEventListener('click', ()=>{
+  prepMode = 'shorten';
+  document.getElementById('modeShorten').classList.add('active');
+  document.getElementById('modeLower').classList.remove('active');
+});
+document.getElementById('modeLower').addEventListener('click', ()=>{
+  prepMode = 'lower';
+  document.getElementById('modeLower').classList.add('active');
+  document.getElementById('modeShorten').classList.remove('active');
+});
+
+function computePrepayment(){
+  const base = recompute();
+  const {principal, months, r, M, schedule} = base;
+  const prepMonth = Math.min(Math.max(parseInt(document.getElementById('prepMonth').value)||1,1), months);
+  const prepAmount = Math.max(parseFloat(document.getElementById('prepAmount').value)||0, 0);
+
+  // balance right before the prepayment month's payment is applied normally
+  const idx = prepMonth - 1;
+  const balanceBeforePrepMonth = idx===0 ? principal : schedule[idx-1].balance;
+
+  // scenario BEFORE (no prepayment): remaining schedule from this month onward, original M
+  const remainingMonthsOriginal = months - (prepMonth-1);
+  const beforeSchedule = buildSchedule(balanceBeforePrepMonth, r, remainingMonthsOriginal, M);
+  const beforeInterest = beforeSchedule.reduce((s,row)=>s+row.interest,0);
+
+  // apply prepayment: reduce balance, then either recompute term (fixed M) or recompute M (fixed remaining months)
+  let newBalance = Math.max(balanceBeforePrepMonth - prepAmount, 0);
+  let afterMonthly, afterMonthsCount, afterInterest;
+
+  if(prepMode === 'shorten'){
+    // keep M fixed, iterate until balance depletes
+    const sch = buildSchedule(newBalance, r, 100000, M); // large cap, will stop when balance<=0
+    afterMonthly = M;
+    afterMonthsCount = sch.length;
+    afterInterest = sch.reduce((s,row)=>s+row.interest,0);
+  } else {
+    // keep remaining months fixed, recompute installment
+    const remaining = remainingMonthsOriginal; // same remaining count as original plan
+    const newM = monthlyPayment(newBalance, r, remaining);
+    const sch = buildSchedule(newBalance, r, remaining, newM);
+    afterMonthly = newM;
+    afterMonthsCount = sch.length;
+    afterInterest = sch.reduce((s,row)=>s+row.interest,0);
+  }
+
+  document.getElementById('beforeMonthly').textContent = euroDec(M);
+  document.getElementById('beforeMonths').textContent = beforeSchedule.length + (currentLang==='en' ? ' installments' : ' δόσεις');
+  document.getElementById('beforeInterest').textContent = euro(beforeInterest);
+
+  document.getElementById('afterMonthly').textContent = euroDec(afterMonthly);
+  document.getElementById('afterMonths').textContent = afterMonthsCount + (currentLang==='en' ? ' installments' : ' δόσεις');
+  document.getElementById('afterInterest').textContent = euro(afterInterest);
+
+  document.getElementById('compareBox').style.display = 'grid';
+
+  const interestSaved = beforeInterest - afterInterest;
+  const monthsSaved = beforeSchedule.length - afterMonthsCount;
+  let msg = currentLang==='en' ? `Interest saved: ${euro(interestSaved)}` : `Εξοικονόμηση τόκων: ${euro(interestSaved)}`;
+  if(prepMode==='shorten'){
+    msg += currentLang==='en' ? ` \u00b7 Term shortened by ${monthsSaved} installments` : ` · Μείωση διάρκειας κατά ${monthsSaved} δόσεις`;
+  } else {
+    msg += currentLang==='en' ? ` \u00b7 New payment reduced by ${euroDec(M-afterMonthly)}` : ` · Νέα δόση μειωμένη κατά ${euroDec(M-afterMonthly)}`;
+  }
+  const banner = document.getElementById('savingsBanner');
+  banner.textContent = msg;
+  banner.style.display = 'block';
+}
+
+document.getElementById('computeBtn').addEventListener('click', computePrepayment);
+
+['amount','down','installments','rate'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', recompute);
+});
+
+// --- Tabs ---
+const tabButtons = {
+  loan: document.getElementById('tabBtnLoan'),
+  moto: document.getElementById('tabBtnMoto'),
+  salary: document.getElementById('tabBtnSalary'),
+  budget: document.getElementById('tabBtnBudget')
+};
+const tabPanels = {
+  loan: document.getElementById('tabLoan'),
+  moto: document.getElementById('tabMoto'),
+  salary: document.getElementById('tabSalary'),
+  budget: document.getElementById('tabBudget')
+};
+function showTab(name){
+  Object.keys(tabPanels).forEach(key=>{
+    tabPanels[key].style.display = (key===name) ? 'block' : 'none';
+    tabButtons[key].classList.toggle('active', key===name);
+  });
+  if(name==='salary') recomputeSalary();
+  if(name==='budget') recomputeBudget();
+}
+tabButtons.loan.addEventListener('click', ()=>showTab('loan'));
+tabButtons.moto.addEventListener('click', ()=>showTab('moto'));
+tabButtons.salary.addEventListener('click', ()=>showTab('salary'));
+tabButtons.budget.addEventListener('click', ()=>showTab('budget'));
+
+function updateMotoTabAvailability(){
+  const amount = parseFloat(document.getElementById('amount').value)||0;
+  const isZero = amount <= 0;
+  tabButtons.moto.disabled = isZero;
+  tabButtons.moto.title = isZero ? (currentLang==='en' ? 'Fill in the loan amount to enable' : 'Συμπληρώστε ποσό δανείου για να ενεργοποιηθεί') : '';
+  if(isZero && tabPanels.moto.style.display !== 'none'){
+    showTab('salary');
+  }
+  if(isZero){
+    const motoFieldIds = ['motoInsurance','motoRoadTax','motoService','motoFuel','motoParking','motoOther'];
+    let clearedSomething = false;
+    motoFieldIds.forEach(id=>{
+      const el = document.getElementById(id);
+      if((parseFloat(el.value)||0) !== 0){
+        el.value = 0;
+        clearedSomething = true;
+      }
+    });
+    if(clearedSomething && typeof recomputeBudget === 'function') recomputeBudget();
+  }
+}
+
+document.getElementById('clearLoanBtn').addEventListener('click', ()=>{
+  document.getElementById('amount').value = '';
+  document.getElementById('down').value = '';
+  document.getElementById('installments').value = '';
+  recompute();
+});
+
+let lastMonthlyPayment = 0;
+let lastNetSalary = 0;
+let lastAvgBonusEquiv = 0;
+let lastExtraNet = 0;
+let lastXmasNet = 0, lastEasterNet = 0, lastLeaveNet = 0;
+let lastAllocationSurplus = 0;
+let lastSavingsSuggestion = 0;
+
+function recomputeBudget(){
+  const motoActive = parseFloat(document.getElementById('amount').value) > 0;
+
+  const insurance = parseFloat(document.getElementById('motoInsurance').value)||0;
+  const roadTax = parseFloat(document.getElementById('motoRoadTax').value)||0;
+  const service = parseFloat(document.getElementById('motoService').value)||0;
+  const fixedMonthlyEquiv = motoActive ? (insurance+roadTax+service)/12 : 0;
+
+  const fuel = parseFloat(document.getElementById('motoFuel').value)||0;
+  const parking = parseFloat(document.getElementById('motoParking').value)||0;
+  const other = parseFloat(document.getElementById('motoOther').value)||0;
+  const variableMonthly = motoActive ? (fuel+parking+other) : 0;
+
+  const motoTotal = motoActive ? (lastMonthlyPayment + fixedMonthlyEquiv + variableMonthly) : 0;
+
+  document.getElementById('fMotoLoan').textContent = euroDec(lastMonthlyPayment);
+  document.getElementById('fMotoFixed').textContent = euroDec(fixedMonthlyEquiv);
+  document.getElementById('fMotoVar').textContent = euroDec(variableMonthly);
+  document.getElementById('fMotoTotal').textContent = euroDec(motoTotal);
+
+  const income = parseFloat(document.getElementById('income').value)||0;
+  const otherFixed = parseFloat(document.getElementById('fixedExpenses').value)||0;
+  const remaining = income - otherFixed - motoTotal + lastExtraNet;
+
+  const extraCaption = currentLang==='en'
+    ? `Includes extra net monthly (e.g. Ticket Restaurant): ${euroDec(lastExtraNet)}`
+    : `Περιλαμβάνει έξτρα καθαρά μηνιαία (π.χ. Ticket Restaurant): ${euroDec(lastExtraNet)}`;
+  document.getElementById('capBudgetBanner').textContent = extraCaption;
+  document.getElementById('capRemainNoBonus').textContent = extraCaption;
+
+  const banner = document.getElementById('budgetBanner');
+  if(remaining >= 0){
+    banner.textContent = currentLang==='en'
+      ? `Available balance after all expenses: ${euroDec(remaining)} / month`
+      : `Διαθέσιμο υπόλοιπο μετά από όλα τα έξοδα: ${euroDec(remaining)} / μήνα`;
+    banner.style.background = 'var(--brass-soft)';
+    banner.style.color = 'var(--teal-deep)';
+  } else {
+    banner.textContent = currentLang==='en'
+      ? `Warning: deficit of ${euroDec(Math.abs(remaining))} / month \u2014 expenses exceed income`
+      : `Προσοχή: έλλειμμα ${euroDec(Math.abs(remaining))} / μήνα — τα έξοδα ξεπερνούν το εισόδημα`;
+    banner.style.background = '#f1dcd6';
+    banner.style.color = 'var(--red-ink)';
+  }
+
+  const remainNoBonus = lastNetSalary + lastExtraNet - otherFixed - motoTotal;
+  const remainWithBonus = lastNetSalary + lastAvgBonusEquiv + lastExtraNet - otherFixed - motoTotal;
+
+  const noBonusBox = document.getElementById('fRemainNoBonus');
+  noBonusBox.textContent = euroDec(remainNoBonus);
+  noBonusBox.closest('.result-box').classList.toggle('negative', remainNoBonus < 0);
+
+  // --- Recommendation tips ---
+  const tips = [];
+  const motoSharePct = income > 0 ? (motoTotal/income)*100 : 0;
+
+  if(!motoActive){
+    tips.push(currentLang==='en'
+      ? `There is no active loan right now \u2014 the vehicle cost share of your income will show here once you fill in a loan amount.`
+      : `Δεν υπάρχει ενεργό δάνειο αυτή τη στιγμή — το μερίδιο κόστους οχήματος επί του εισοδήματος θα εμφανιστεί εδώ μόλις συμπληρώσεις ποσό δανείου.`);
+  } else if(motoSharePct > 20){
+    tips.push(currentLang==='en'
+      ? `The vehicle absorbs about <strong>${motoSharePct.toFixed(0)}%</strong> of your monthly income \u2014 quite a high share. A bigger down payment or a smaller loan amount would meaningfully ease your monthly budget.`
+      : `Το όχημα απορροφά περίπου <strong>${motoSharePct.toFixed(0)}%</strong> του μηνιαίου σου εισοδήματος — αρκετά υψηλό ποσοστό. Αν εξετάζεις μεγαλύτερη προκαταβολή ή μικρότερο ποσό δανείου, θα ελαφρύνει σημαντικά τον μηνιαίο προϋπολογισμό σου.`);
+  } else if(motoSharePct > 0){
+    tips.push(currentLang==='en'
+      ? `The vehicle absorbs about <strong>${motoSharePct.toFixed(0)}%</strong> of your monthly income \u2014 a reasonable range.`
+      : `Το όχημα απορροφά περίπου <strong>${motoSharePct.toFixed(0)}%</strong> του μηνιαίου σου εισοδήματος — σε λογικά πλαίσια.`);
+  }
+
+  // --- Smart bonus-to-expense allocation (best-fit by amount, not fixed pairing) ---
+  // Runs regardless of whether a loan is active: bonuses/allowance vs. whatever
+  // vehicle expenses are entered, so the vacation fund suggestion never depends
+  // on there being an active loan.
+  {
+  const roadTaxCost = parseFloat(document.getElementById('motoRoadTax').value)||0;
+  const serviceCost = parseFloat(document.getElementById('motoService').value)||0;
+  const insuranceCost = parseFloat(document.getElementById('motoInsurance').value)||0;
+
+  const bonuses = [
+    {label: currentLang==='en' ? 'Christmas Bonus' : 'Δώρο Χριστουγέννων', month: currentLang==='en' ? 'December' : 'Δεκέμβριο', amount:lastXmasNet},
+    {label: currentLang==='en' ? 'Easter Bonus' : 'Δώρο Πάσχα', month: currentLang==='en' ? 'April' : 'Απρίλιο', amount:lastEasterNet},
+    {label: currentLang==='en' ? 'Leave Allowance' : 'Επίδομα Αδείας', month: currentLang==='en' ? 'summer' : 'καλοκαίρι', amount:lastLeaveNet}
+  ];
+  const expenses = [
+    {label: currentLang==='en' ? 'the Road Tax' : 'τα Τέλη Κυκλοφορίας', cost:roadTaxCost},
+    {label: currentLang==='en' ? 'the Service/maintenance' : 'το Service/συντήρηση', cost:serviceCost},
+    {label: currentLang==='en' ? 'the Insurance' : 'την Ασφάλεια', cost:insuranceCost}
+  ];
+
+  // try all 6 permutations of expenses assigned to bonuses; pick the one
+  // that covers the most expenses in full, then minimizes total |difference|
+  function permutations(arr){
+    if(arr.length<=1) return [arr];
+    const result=[];
+    arr.forEach((item,i)=>{
+      const rest=arr.slice(0,i).concat(arr.slice(i+1));
+      permutations(rest).forEach(p=>result.push([item,...p]));
+    });
+    return result;
+  }
+  let bestPerm = null, bestScore = null;
+  permutations(expenses).forEach(perm=>{
+    let covered=0, totalAbsDiff=0;
+    perm.forEach((exp,i)=>{
+      const diff = bonuses[i].amount - exp.cost;
+      if(diff>=0) covered++;
+      totalAbsDiff += Math.abs(diff);
+    });
+    const score = [-covered, totalAbsDiff]; // maximize covered, then minimize deviation
+    if(bestScore===null || score[0]<bestScore[0] || (score[0]===bestScore[0] && score[1]<bestScore[1])){
+      bestScore = score;
+      bestPerm = perm;
+    }
+  });
+
+  const allocations = bonuses.map((b,i)=>({...b, expenseLabel:bestPerm[i].label, expenseCost:bestPerm[i].cost}));
+
+  let allocText = currentLang==='en'
+    ? '<strong>Bonus allocation suggestion (by amount):</strong><br>'
+    : '<strong>Πρόταση κατανομής δώρων (βάσει ποσού):</strong><br>';
+  let totalSurplus = 0;
+  allocations.forEach(a=>{
+    const diff = a.amount - a.expenseCost;
+    totalSurplus += diff;
+    if(a.amount <= 0.5){ return; }
+    if(diff >= 0){
+      allocText += currentLang==='en'
+        ? `\u2192 The ${a.label} (${euroDec(a.amount)}, ${a.month}) covers ${a.expenseLabel} (${euroDec(a.expenseCost)}) with ${euroDec(diff)} left over.<br>`
+        : `→ Το ${a.label} (${euroDec(a.amount)}, ${a.month}) καλύπτει ${a.expenseLabel} (${euroDec(a.expenseCost)}) και περισσεύουν ${euroDec(diff)}.<br>`;
+    } else {
+      allocText += currentLang==='en'
+        ? `\u2192 The ${a.label} (${euroDec(a.amount)}, ${a.month}) is not enough for ${a.expenseLabel} (${euroDec(a.expenseCost)}) \u2014 ${euroDec(Math.abs(diff))} short from elsewhere.<br>`
+        : `→ Το ${a.label} (${euroDec(a.amount)}, ${a.month}) δεν επαρκεί για ${a.expenseLabel} (${euroDec(a.expenseCost)}) — λείπουν ${euroDec(Math.abs(diff))} από αλλού.<br>`;
+    }
+  });
+  if(totalSurplus > 0){
+    allocText += currentLang==='en'
+      ? `After covering all three expenses, <strong>${euroDec(totalSurplus)}</strong> is left over from the bonuses this year \u2014 this feeds the vacation fund below.`
+      : `Μετά την κάλυψη και των τριών εξόδων, μένει συνολικά <strong>${euroDec(totalSurplus)}</strong> από τα δώρα τον χρόνο — αυτό τροφοδοτεί το αποθεματικό διακοπών παρακάτω.`;
+  } else if(totalSurplus < 0){
+    allocText += currentLang==='en'
+      ? `Overall, the bonuses fall short by <strong>${euroDec(Math.abs(totalSurplus))}</strong> of covering all three fixed vehicle expenses \u2014 the shortfall will need to come from the regular salary.`
+      : `Συνολικά, τα δώρα υπολείπονται κατά <strong>${euroDec(Math.abs(totalSurplus))}</strong> από το να καλύψουν και τα τρία πάγια έξοδα οχήματος — θα χρειαστεί συμπλήρωμα από τον τακτικό μισθό.`;
+  }
+  tips.push(allocText);
+  lastAllocationSurplus = totalSurplus;
+  updateVacationFund();
+  }
+
+  const savingsBox = document.getElementById('fSavingsGroup');
+  const invContribField = document.getElementById('invContribution');
+  lastSavingsSuggestion = 0;
+  let afterSavingsAmount = null;
+  const savingsPct = parseFloat(document.getElementById('savingsPct').value)||0;
+  if(remainNoBonus < 0 && remainWithBonus >= 0){
+    tips.push(currentLang==='en'
+      ? `Without bonuses the balance is negative, but it's covered once they're factored in. Watch out for months with no bonus (i.e. outside December/April/summer) \u2014 that's when you need the fund.`
+      : `Χωρίς τα δώρα το υπόλοιπο βγαίνει αρνητικό, αλλά καλύπτεται όταν υπολογιστούν και αυτά. Πρόσεξε τους μήνες χωρίς δώρο (π.χ. εκτός Δεκεμβρίου/Απριλίου/καλοκαιριού) — εκεί χρειάζεσαι το αποθεματικό.`);
+    savingsBox.style.display = 'none';
+  } else if(remainWithBonus < 0){
+    tips.push(currentLang==='en'
+      ? `Even with bonuses, the balance comes out negative. It's worth reconsidering the loan amount or term before proceeding.`
+      : `Ακόμη και με τα δώρα, το υπόλοιπο βγαίνει αρνητικό. Αξίζει να ξανακοιτάξεις το ποσό ή τη διάρκεια του δανείου πριν προχωρήσεις.`);
+    savingsBox.style.display = 'none';
+  } else if(remainNoBonus > 0 && savingsPct > 0){
+    const savingsSuggestion = remainNoBonus*(savingsPct/100);
+    lastSavingsSuggestion = savingsSuggestion;
+    afterSavingsAmount = remainNoBonus - savingsSuggestion;
+    document.getElementById('fBeforeSavings').textContent = euroDec(remainNoBonus);
+    document.getElementById('fSavingsAmount').textContent = euroDec(savingsSuggestion);
+    document.getElementById('fAfterSavings').textContent = euroDec(afterSavingsAmount);
+    savingsBox.style.display = 'grid';
+    if(invContribField.dataset.touched !== 'true'){
+      invContribField.value = Math.round(savingsSuggestion);
+      if(typeof recomputeInvestment === 'function') recomputeInvestment();
+    }
+  } else {
+    savingsBox.style.display = 'none';
+  }
+
+  document.getElementById('budgetTips').innerHTML = tips.map(t=>
+    t.includes('<br>')
+      ? `<div class="tip-item"><span>${t}</span></div>`
+      : `<div class="tip-item"><span class="tip-icon">→</span><span>${t}</span></div>`
+  ).join('');
+
+  updateSummaryBar(motoActive, income, remainNoBonus, remaining, afterSavingsAmount);
+}
+
+function updateSummaryBar(motoActive, income, remainNoBonus, remaining, afterSavingsAmount){
+  document.getElementById('sumNetSalary').textContent = euroDec(lastNetSalary);
+
+  const loanItem = document.getElementById('sumLoanItem');
+  if(motoActive){
+    document.getElementById('sumLoan').textContent = euroDec(lastMonthlyPayment);
+    loanItem.style.display = 'flex';
+  } else {
+    loanItem.style.display = 'none';
+  }
+
+  const savingsItem = document.getElementById('sumSavingsItem');
+  const afterSavingsItem = document.getElementById('sumAfterSavingsItem');
+  if(afterSavingsAmount !== null){
+    document.getElementById('sumSavings').textContent = euroDec(lastSavingsSuggestion);
+    document.getElementById('sumAfterSavings').textContent = euroDec(afterSavingsAmount);
+    savingsItem.style.display = 'flex';
+    afterSavingsItem.style.display = 'flex';
+  } else {
+    savingsItem.style.display = 'none';
+    afterSavingsItem.style.display = 'none';
+  }
+
+  document.getElementById('sumRemaining').textContent = euroDec(remaining);
+
+  const ratio = income > 0 ? remainNoBonus/income : (remainNoBonus < 0 ? -1 : 0);
+  const badge = document.getElementById('sumStatusBadge');
+  badge.classList.remove('surplus','risk','deficit');
+  if(remainNoBonus < 0){
+    badge.textContent = currentLang==='en' ? 'Deficit' : 'Έλλειμμα';
+    badge.classList.add('deficit');
+  } else if(ratio < 0.10){
+    badge.textContent = currentLang==='en' ? 'Risk' : 'Κίνδυνος';
+    badge.classList.add('risk');
+  } else {
+    badge.textContent = currentLang==='en' ? 'Surplus' : 'Πλεόνασμα';
+    badge.classList.add('surplus');
+  }
+}
+
+['motoInsurance','motoRoadTax','motoService','motoFuel','motoParking','motoOther','income','fixedExpenses','savingsPct'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', recomputeBudget);
+});
+
+function updateVacationFund(){
+  const saved = parseFloat(document.getElementById('vacationSaved').value)||0;
+  const suggestedAdd = Math.max(lastAllocationSurplus, 0);
+  document.getElementById('vacationSuggestedAdd').textContent = euroDec(suggestedAdd);
+  document.getElementById('vacationNewTotal').textContent = euroDec(saved + suggestedAdd);
+}
+document.getElementById('vacationSaved').addEventListener('input', updateVacationFund);
+
+// --- Salary & bonuses (14-payment system) ---
+function daysBetween(d1,d2){ return Math.round((d2-d1)/(1000*60*60*24)); }
+
+function parseGreekDate(str){
+  if(!str) return null;
+  const m = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if(!m) return null;
+  const day = parseInt(m[1],10), month = parseInt(m[2],10), year = parseInt(m[3],10);
+  if(month<1||month>12||day<1||day>31) return null;
+  const d = new Date(year, month-1, day);
+  if(d.getMonth() !== month-1) return null; // rejects e.g. 31/02
+  return d;
+}
+
+document.getElementById('hireDate').addEventListener('input', function(e){
+  let digits = e.target.value.replace(/\D/g,'').slice(0,8);
+  let formatted = digits;
+  if(digits.length>4) formatted = digits.slice(0,2)+'/'+digits.slice(2,4)+'/'+digits.slice(4);
+  else if(digits.length>2) formatted = digits.slice(0,2)+'/'+digits.slice(2);
+  e.target.value = formatted;
+  const parsed = parseGreekDate(formatted);
+  if(parsed){
+    const iso = parsed.getFullYear()+'-'+String(parsed.getMonth()+1).padStart(2,'0')+'-'+String(parsed.getDate()).padStart(2,'0');
+    document.getElementById('hireDatePicker').value = iso;
+  }
+});
+
+document.getElementById('hireDatePicker').addEventListener('input', function(e){
+  const iso = e.target.value;
+  if(!iso) return;
+  const [y,m,d] = iso.split('-');
+  const textField = document.getElementById('hireDate');
+  textField.value = `${d}/${m}/${y}`;
+  textField.dispatchEvent(new Event('input'));
+});
+
+function proportionalBonus(hireDate, periodStart, periodEnd, fullAmount){
+  const empStart = hireDate > periodStart ? hireDate : periodStart;
+  if(empStart > periodEnd) return 0;
+  const totalDays = daysBetween(periodStart, periodEnd) + 1;
+  const workedDays = daysBetween(empStart, periodEnd) + 1;
+  const ratio = Math.min(Math.max(workedDays/totalDays, 0), 1);
+  return fullAmount * ratio;
+}
+
+function r2(x){ return Math.round(x*100)/100; }
+
+const TAX_BRACKETS_BY_AGE = {
+  standard: [
+    {limit:10000, rate:0.09},
+    {limit:20000, rate:0.20},
+    {limit:30000, rate:0.26},
+    {limit:40000, rate:0.34},
+    {limit:60000, rate:0.39},
+    {limit:Infinity, rate:0.44}
+  ],
+  young30: [ // 26-30 ετών: 9% flat έως 20.000€, μετά ίδιο με τη βασική κλίμακα
+    {limit:20000, rate:0.09},
+    {limit:30000, rate:0.26},
+    {limit:40000, rate:0.34},
+    {limit:60000, rate:0.39},
+    {limit:Infinity, rate:0.44}
+  ],
+  young25: [ // έως 25 ετών: μηδενικός φόρος έως 20.000€, μετά ίδιο με τη βασική κλίμακα
+    {limit:20000, rate:0.00},
+    {limit:30000, rate:0.26},
+    {limit:40000, rate:0.34},
+    {limit:60000, rate:0.39},
+    {limit:Infinity, rate:0.44}
+  ]
+};
+
+function annualTax(annualTaxable, ageBracket){
+  const brackets = TAX_BRACKETS_BY_AGE[ageBracket] || TAX_BRACKETS_BY_AGE.standard;
+  let tax=0, prev=0;
+  for(const b of brackets){
+    if(annualTaxable > prev){
+      tax += (Math.min(annualTaxable,b.limit)-prev) * b.rate;
+      prev = b.limit;
+    } else break;
+  }
+  return r2(tax);
+}
+
+function effectiveTaxCredit(baseCredit, annualTaxable){
+  if(annualTaxable <= 12000) return r2(baseCredit);
+  const reduction = r2(20 * (annualTaxable-12000)/1000);
+  return Math.max(r2(baseCredit - reduction), 0);
+}
+
+function netFromGross(gross, ssRatePct, baseTaxCredit, ageBracket){
+  const ss = r2(gross * (ssRatePct/100));
+  const taxable = Math.max(r2(gross - ss), 0);
+  const annualTaxable = r2(taxable * 14);
+  const grossAnnualTax = annualTax(annualTaxable, ageBracket);
+  const usedCredit = effectiveTaxCredit(baseTaxCredit, annualTaxable);
+  const annualTaxAfterCredit = Math.max(r2(grossAnnualTax - usedCredit), 0);
+  const monthlyTax = r2(annualTaxAfterCredit/14);
+  return {
+    net: Math.max(r2(gross - ss - monthlyTax), 0),
+    ss, taxable, annualTaxable, grossAnnualTax, usedCredit, annualTaxAfterCredit, monthlyTax
+  };
+}
+
+function recomputeSalary(){
+  const gross = parseFloat(document.getElementById('grossSalary').value)||0;
+  const ssRate = parseFloat(document.getElementById('ssRate').value)||0;
+  const taxCredit = parseFloat(document.getElementById('taxCredit').value)||0;
+  const extraNet = parseFloat(document.getElementById('extraNet').value)||0;
+  const ageBracket = document.getElementById('ageBracket').value;
+  const hireDateVal = document.getElementById('hireDate').value;
+  const hireDate = parseGreekDate(hireDateVal) || new Date();
+
+  const calc = netFromGross(gross, ssRate, taxCredit, ageBracket);
+  const net = calc.net;
+  const netRatio = gross > 0 ? net/gross : 0;
+
+  // --- Extra hour-based pay: overwork / holiday / overtime ---
+  // Per current law (Ν.5184/2025, άρθρο 41): no extra EFKA contributions on these
+  // for full-time employees; taxed with a flat 20% withholding instead of the
+  // progressive scale. Hourly wage derived as gross/25 (daily) /6.667 (hours/day).
+  const overworkHours = parseFloat(document.getElementById('overworkHours').value)||0;
+  const holidayHours = parseFloat(document.getElementById('holidayHours').value)||0;
+  const overtimeHours = parseFloat(document.getElementById('overtimeHours').value)||0;
+
+  const hourlyWage = gross/25/6.667;
+  const extraGross = overworkHours*hourlyWage*1.20 + holidayHours*hourlyWage*0.75 + overtimeHours*hourlyWage*1.40;
+  const extraPayNet = r2(extraGross*0.80); // flat 20% withholding, no EFKA
+
+  document.getElementById('sExtraPayNet').textContent = euroDec(extraPayNet);
+  document.getElementById('sNetTotal').textContent = euroDec(net + extraPayNet);
+
+
+  const year = new Date().getFullYear();
+  const xmasStart = new Date(year,4,1), xmasEnd = new Date(year,11,31);
+  const easterStart = new Date(year,0,1), easterEnd = new Date(year,3,30);
+  const leaveStart = new Date(year,4,1), leaveEnd = new Date(year,11,31);
+
+  const xmasGross = proportionalBonus(hireDate, xmasStart, xmasEnd, gross);
+  const easterGross = proportionalBonus(hireDate, easterStart, easterEnd, gross/2);
+  const leaveGross = proportionalBonus(hireDate, leaveStart, leaveEnd, gross/2);
+
+  const xmasNet = xmasGross*netRatio;
+  const easterNet = easterGross*netRatio;
+  const leaveNet = leaveGross*netRatio;
+
+  document.getElementById('sGross').textContent = euroDec(gross);
+  document.getElementById('sSS').textContent = '-' + euroDec(calc.ss);
+  document.getElementById('sTaxable').textContent = euroDec(calc.taxable);
+  document.getElementById('sTax').textContent = '-' + euroDec(calc.monthlyTax);
+  document.getElementById('sNet').textContent = euroDec(net);
+
+  document.getElementById('sAnnualTaxable').textContent = euroDec(calc.annualTaxable);
+  document.getElementById('sGrossTax').textContent = euroDec(calc.grossAnnualTax);
+  document.getElementById('sCredit').textContent = '-' + euroDec(calc.usedCredit);
+  document.getElementById('sFinalTax').textContent = euroDec(calc.annualTaxAfterCredit);
+  document.getElementById('sEReceipts').textContent = euroDec(calc.annualTaxable*0.30);
+
+  document.getElementById('xmasGross').textContent = euroDec(xmasGross);
+  document.getElementById('xmasNet').textContent = euroDec(xmasNet);
+  document.getElementById('easterGross').textContent = euroDec(easterGross);
+  document.getElementById('easterNet').textContent = euroDec(easterNet);
+  document.getElementById('leaveGross').textContent = euroDec(leaveGross);
+  document.getElementById('leaveNet').textContent = euroDec(leaveNet);
+
+  const avgBonusEquiv = (xmasNet+easterNet+leaveNet)/12;
+  const estimatedIncome = net + avgBonusEquiv + extraNet;
+
+  lastNetSalary = net + extraPayNet;
+  lastAvgBonusEquiv = avgBonusEquiv;
+  lastExtraNet = extraNet;
+  lastXmasNet = xmasNet;
+  lastEasterNet = easterNet;
+  lastLeaveNet = leaveNet;
+
+  document.getElementById('incomeBanner').textContent = currentLang==='en'
+    ? `Estimated net monthly income (salary + bonus average + extra): ${euroDec(estimatedIncome)}`
+    : `Εκτιμώμενο μηνιαίο καθαρό εισόδημα (μισθός + μέσος όρος δώρων + έξτρα): ${euroDec(estimatedIncome)}`;
+
+  const incomeField = document.getElementById('income');
+  if(incomeField.dataset.touched !== 'true'){
+    incomeField.value = Math.round(net);
+  }
+  recomputeBudget();
+}
+
+document.getElementById('income').addEventListener('input', function(){ this.dataset.touched = 'true'; });
+['grossSalary','hireDate','ssRate','taxCredit','extraNet','overworkHours','holidayHours','overtimeHours','ageBracket'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', recomputeSalary);
+});
+document.getElementById('ageBracket').addEventListener('change', recomputeSalary);
+
+// --- Investment calculator ---
+function recomputeInvestment(){
+  const start = parseFloat(document.getElementById('invStart').value)||0;
+  const years = Math.max(parseInt(document.getElementById('invYears').value)||1, 1);
+  const contribution = parseFloat(document.getElementById('invContribution').value)||0;
+  const contribFreq = parseInt(document.getElementById('invContribFreq').value)||12;
+  const annualRatePct = parseFloat(document.getElementById('invRate').value)||0;
+  const compoundFreq = parseInt(document.getElementById('invCompound').value)||12;
+
+  const annualRate = annualRatePct/100;
+  const effectiveAnnualRate = compoundFreq>0 ? Math.pow(1+annualRate/compoundFreq, compoundFreq)-1 : annualRate;
+  const monthlyRate = Math.pow(1+effectiveAnnualRate, 1/12)-1;
+
+  const monthsPerContribution = 12/contribFreq;
+
+  let balance = start;
+  let totalContributions = start;
+  const yearlyData = [];
+
+  for(let month=1; month<=years*12; month++){
+    balance *= (1+monthlyRate);
+    if(month % monthsPerContribution === 0){
+      balance += contribution;
+      totalContributions += contribution;
+    }
+    if(month % 12 === 0){
+      yearlyData.push({year: month/12, contributions: totalContributions, balance});
+    }
+  }
+
+  const totalGrowth = balance - totalContributions;
+
+  document.getElementById('invTotalContrib').textContent = euroDec(totalContributions);
+  document.getElementById('invTotalGrowth').textContent = euroDec(totalGrowth);
+  document.getElementById('invFinalBalance').textContent = euroDec(balance);
+
+  const container = document.getElementById('invLedgerBars');
+  container.innerHTML = '';
+  let prevContrib = start, prevBalance = start;
+  const maxBalance = Math.max(...yearlyData.map(y=>y.balance), 1);
+  yearlyData.forEach(y=>{
+    const yearContrib = y.contributions - prevContrib;
+    const yearGrowth = (y.balance - y.contributions) - (prevBalance - prevContrib);
+    const yearTotal = yearContrib + yearGrowth;
+    const widthPct = (y.balance/maxBalance)*100;
+    const row = document.createElement('div');
+    row.className = 'ledger-row';
+    row.innerHTML = `
+      <span class="yr">${currentLang==='en' ? 'Y' : 'Ε'}${y.year}</span>
+      <div class="bar" style="width:${widthPct}%">
+        <div class="principal" style="width:${Math.max(yearContrib,0)/Math.max(yearTotal,0.01)*100}%"></div>
+        <div class="interest" style="width:${Math.max(yearGrowth,0)/Math.max(yearTotal,0.01)*100}%"></div>
+      </div>
+    `;
+    container.appendChild(row);
+    prevContrib = y.contributions;
+    prevBalance = y.balance;
+  });
+}
+
+['invStart','invYears','invContribution','invContribFreq','invRate','invCompound'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', recomputeInvestment);
+  document.getElementById(id).addEventListener('change', recomputeInvestment);
+});
+document.getElementById('invContribution').addEventListener('input', function(){ this.dataset.touched = 'true'; });
+document.getElementById('invContribResyncBtn').addEventListener('click', ()=>{
+  const field = document.getElementById('invContribution');
+  field.dataset.touched = 'false';
+  field.value = Math.round(lastSavingsSuggestion);
+  recomputeInvestment();
+});
+
+recompute();
+recomputeSalary();
+recomputeInvestment();
+
+// --- Export / Import data (Excel .xlsx via SheetJS) ---
+const EXPORT_FIELD_IDS = [
+  'amount','down','installments','rate',
+  'prepMonth','prepAmount',
+  'grossSalary','hireDate','ssRate','taxCredit','extraNet','overworkHours','holidayHours','overtimeHours','ageBracket',
+  'motoInsurance','motoRoadTax','motoService','motoFuel','motoParking','motoOther',
+  'income','fixedExpenses','vacationSaved','savingsPct',
+  'invStart','invYears','invContribution','invContribFreq','invRate','invCompound'
+];
+
+const DEFAULT_VALUES = {
+  amount:'0', down:'0', installments:'24', rate:'11.25',
+  prepMonth:'0', prepAmount:'0',
+  grossSalary:'1570', hireDate:'01/01/2026', ssRate:'13.37', taxCredit:'777', extraNet:'100', ageBracket:'standard',
+  overworkHours:'0', holidayHours:'0', overtimeHours:'0',
+  motoInsurance:'0', motoRoadTax:'0', motoService:'0', motoFuel:'0', motoParking:'0', motoOther:'0',
+  income:'1400', fixedExpenses:'600', vacationSaved:'0', savingsPct:'0',
+  invStart:'0', invYears:'15', invContribution:'50', invContribFreq:'12', invRate:'6', invCompound:'12'
+};
+
+document.getElementById('printBtn').addEventListener('click', ()=>{
+  const txt = id => document.getElementById(id).textContent;
+  const val = id => document.getElementById(id).value;
+  const pt = (el, en) => currentLang==='en' ? en : el;
+
+  const motoActive = parseFloat(val('amount')) > 0;
+
+  let html = `
+    <h1>${pt('Βιβλίο Εσόδων-Εξόδων — Αναφορά','Income & Expense Ledger — Report')}</h1>
+    <div class="print-date">${new Date().toLocaleDateString(currentLang==='en' ? 'en-GB' : 'el-GR')}</div>
+
+    <h2>${pt('Μισθός & Δώρα','Salary & Bonuses')}</h2>
+    <table>
+      <tr><td>${pt('Μικτός μηνιαίος μισθός','Gross Monthly Salary')}</td><td>${txt('sGross')}</td></tr>
+      <tr><td>${pt('Κρατήσεις ΕΦΚΑ','Social Security Contributions')}</td><td>${txt('sSS')}</td></tr>
+      <tr><td>${pt('Μηνιαίος φόρος εισοδήματος','Monthly Income Tax')}</td><td>${txt('sTax')}</td></tr>
+      <tr><td>${pt('Καθαρός μηνιαίος μισθός (τακτικός)','Net Monthly Salary (Regular)')}</td><td>${txt('sNet')}</td></tr>
+      <tr><td>${pt('Πρόσθετες αμοιβές (καθαρό)','Extra Pay (net)')}</td><td>${txt('sExtraPayNet')}</td></tr>
+      <tr><td><strong>${pt('Σύνολο καθαρών μηνιαίων αποδοχών','Total Net Monthly Earnings')}</strong></td><td><strong>${txt('sNetTotal')}</strong></td></tr>
+      <tr><td>${pt('Δώρο Χριστουγέννων (καθαρό)','Christmas Bonus (net)')}</td><td>${txt('xmasNet')}</td></tr>
+      <tr><td>${pt('Δώρο Πάσχα (καθαρό)','Easter Bonus (net)')}</td><td>${txt('easterNet')}</td></tr>
+      <tr><td>${pt('Επίδομα Αδείας (καθαρό)','Leave Allowance (net)')}</td><td>${txt('leaveNet')}</td></tr>
+    </table>
+
+    ${motoActive ? `
+    <h2>${pt('Δάνειο','Loan')}</h2>
+    <table>
+      <tr><td>${pt('Ποσό δανείου','Loan Amount')}</td><td>${val('amount')} €</td></tr>
+      <tr><td>${pt('Προκαταβολή','Down Payment')}</td><td>${val('down')} €</td></tr>
+      <tr><td>${pt('Διάρκεια','Term')}</td><td>${val('installments')} ${pt('δόσεις','installments')}</td></tr>
+      <tr><td>${pt('Ετήσιο επιτόκιο','Annual Interest Rate')}</td><td>${val('rate')}%</td></tr>
+      <tr><td>${pt('Μηνιαία δόση','Monthly Payment')}</td><td>${txt('rMonthly')}</td></tr>
+      <tr><td>${pt('Σύνολο τόκων','Total Interest')}</td><td>${txt('rInterest')}</td></tr>
+      <tr><td>${pt('Τελικό συνολικό κόστος','Total Final Cost')}</td><td>${txt('rTotal')}</td></tr>
+    </table>
+
+    <h2>${pt('Έξοδα Οχήματος','Vehicle Expenses')}</h2>
+    <table>
+      <tr><td>${pt('Πάγια έξοδα οχήματος (ισοδύναμο/μήνα)','Fixed Vehicle Expenses (monthly equiv.)')}</td><td>${txt('fMotoFixed')}</td></tr>
+      <tr><td>${pt('Λειτουργικά έξοδα οχήματος/μήνα','Operating Vehicle Expenses/month')}</td><td>${txt('fMotoVar')}</td></tr>
+      <tr><td><strong>${pt('Συνολικό μηνιαίο κόστος οχήματος','Total Monthly Vehicle Cost')}</strong></td><td><strong>${txt('fMotoTotal')}</strong></td></tr>
+    </table>
+    ` : ''}
+
+    <h2>${pt('Προϋπολογισμός','Budget')}</h2>
+    <table>
+      <tr><td>${pt('Μηνιαίο καθαρό εισόδημα','Net Monthly Income')}</td><td>${val('income')} €</td></tr>
+      <tr><td>${pt('Λοιπά σταθερά μηνιαία έξοδα','Other Fixed Monthly Expenses')}</td><td>${val('fixedExpenses')} €</td></tr>
+      <tr><td>${pt('Διαθέσιμο υπόλοιπο (χωρίς δώρα)','Available Balance (without bonuses)')}</td><td>${txt('fRemainNoBonus')}</td></tr>
+      <tr><td>${pt('Ποσοστό αποταμίευσης','Savings Percentage')}</td><td>${val('savingsPct')}%</td></tr>
+      ${document.getElementById('fSavingsGroup').style.display !== 'none' ? `
+      <tr><td>${pt('Υπόλοιπο (πριν την αποταμίευση)','Balance (before savings)')}</td><td>${txt('fBeforeSavings')}</td></tr>
+      <tr><td><strong>${pt('Προτεινόμενη αποταμίευση','Suggested Savings')}</strong></td><td><strong>${txt('fSavingsAmount')}</strong></td></tr>
+      <tr><td>${pt('Υπόλοιπο (μετά την αποταμίευση)','Balance (after savings)')}</td><td>${txt('fAfterSavings')}</td></tr>
+      ` : ''}
+      <tr><td>${pt('Αποθεματικό διακοπών - Ήδη αποταμιευμένα','Vacation Fund - Already Saved')}</td><td>${val('vacationSaved')} €</td></tr>
+      <tr><td>${pt('Αποθεματικό διακοπών - Προτεινόμενη προσθήκη','Vacation Fund - Suggested Addition')}</td><td>${txt('vacationSuggestedAdd')}</td></tr>
+      <tr><td>${pt('Αποθεματικό διακοπών - Νέο σύνολο','Vacation Fund - New Total')}</td><td>${txt('vacationNewTotal')}</td></tr>
+    </table>
+  `;
+
+  document.getElementById('printReport').innerHTML = html;
+  window.print();
+});
+
+document.getElementById('defaultsBtn').addEventListener('click', ()=>{
+  EXPORT_FIELD_IDS.forEach(id=>{
+    if(DEFAULT_VALUES[id] !== undefined) document.getElementById(id).value = DEFAULT_VALUES[id];
+  });
+  document.getElementById('income').dataset.touched = 'false';
+  document.getElementById('invContribution').dataset.touched = 'false';
+  document.getElementById('modeShorten').click();
+  document.getElementById('hireDate').dispatchEvent(new Event('input'));
+  recompute();
+  recomputeSalary();
+  recomputeBudget();
+  recomputeInvestment();
+  showSaveStatus(currentLang==='en' ? 'Default values restored.' : 'Επαναφέρθηκαν οι προεπιλεγμένες τιμές.');
+});
+
+function showSaveStatus(msg){
+  const status = document.getElementById('saveStatus');
+  status.textContent = msg;
+}
+
+document.getElementById('langToggleBtn').addEventListener('click', ()=>{
+  setLanguage(currentLang === 'el' ? 'en' : 'el');
+});
+loadSavedLanguage();
+</script>
+</body>
+</html>
