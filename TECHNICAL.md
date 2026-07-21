@@ -1,4 +1,4 @@
-# Technical Documentation — Income & Expense Ledger
+# Technical Documentation — Personal Finance Dashboard
 
 ## 1. Architecture Overview
 

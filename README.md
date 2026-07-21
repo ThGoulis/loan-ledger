@@ -1,8 +1,8 @@
-# Income & Expense Ledger (Βιβλίο Εσόδων-Εξόδων)
+# Personal Finance Dashboard (Οικονομικός Πίνακας Ελέγχου)
 
 A free, single-file, bilingual (Greek/English) web calculator for Greek payroll, loans, and personal budgeting. No sign-up, no backend, no tracking — everything runs client-side in the browser.
 
-**Live site:** https://thgoulis.github.io/loan-ledger/
+**Live site:** https://thgoulis.github.io/personal-finance-dashboard/
 
 ---
 
@@ -52,8 +52,8 @@ This tool is provided for indicative purposes only, with no guarantee of accurac
 No installation needed — clone the repo and open `index.html` in any modern browser:
 
 ```bash
-git clone https://github.com/thgoulis/loan-ledger.git
-cd loan-ledger
+git clone https://github.com/thgoulis/personal-finance-dashboard.git
+cd personal-finance-dashboard
 open index.html   # or just double-click the file
 ```
 
