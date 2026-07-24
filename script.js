@@ -3,7 +3,7 @@ const TRANSLATIONS = {
   el: {
   "eyebrow1": "ΜΙΣΘΟΣ, ΠΡΟΫΠΟΛΟΓΙΣΜΟΣ & ΔΑΝΕΙΟ",
   "h1title": "Οικονομικός Πίνακας Ελέγχου",
-  "pageIntro1": "Δωρεάν υπολογισμός καθαρού μισθού (με φορολογική κλίμακα ανά ηλικία), δώρων Χριστουγέννων/Πάσχα, επιδόματος αδείας, δόσεων δανείου και μηνιαίου προϋπολογισμού.",
+  "pageIntro1": "Δωρεάν πίνακας ελέγχου για μισθό (με φορολογική κλίμακα ανά ηλικία), δώρα, προϋπολογισμό, επενδύσεις και δάνειο — όλα συνδεδεμένα σε ένα εργαλείο.",
   "siteFooter1": "Το εργαλείο παρέχεται ενδεικτικά, χωρίς καμία εγγύηση ακρίβειας — δεν αποτελεί φορολογική, νομική ή χρηματοοικονομική συμβουλή. Για αποφάσεις που σας δεσμεύουν, συμβουλευτείτε αρμόδιο επαγγελματία (λογιστή, μισθοδοσία, τραπεζικό σύμβουλο).",
   "startHint1": "\u2192 Ξεκίνα από το tab «Μισθός & Δώρα» για να υπολογίσεις πρώτα το καθαρό σου εισόδημα.",
   "introT1": "Μισθός & Δώρα",
@@ -190,7 +190,7 @@ const TRANSLATIONS = {
   en: {
   "eyebrow1": "SALARY, BUDGET & LOAN",
   "h1title": "Personal Finance Dashboard",
-  "pageIntro1": "Free calculator for net salary (with the age-based tax scale), Christmas/Easter bonuses, leave allowance, loan installments, and a monthly budget.",
+  "pageIntro1": "A free dashboard for salary (with the age-based tax scale), bonuses, budget, investments, and loans \u2014 all connected in one tool.",
   "siteFooter1": "This tool is provided for indicative purposes only, with no guarantee of accuracy \u2014 it does not constitute tax, legal, or financial advice. For decisions that commit you, consult a qualified professional (accountant, payroll manager, or bank advisor).",
   "startHint1": "\u2192 Start with the \u00abSalary & Bonuses\u00bb tab to work out your net income first.",
   "introT1": "Salary & Bonuses",
