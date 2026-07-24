@@ -26,10 +26,15 @@ const TRANSLATIONS = {
   "sumlbl4": "Διαθέσιμο υπόλοιπο",
   "sumlbl5": "Υπόλοιπο μετά την αποταμίευση",
   "btn46": "Μισθός & Δώρα",
-  "btn47": "Προϋπολογισμός",
+  "btn47": "Μπάτζετ",
   "btn48": "Δάνειο",
   "btn49": "Έξοδα Οχήματος",
-  "btn50b": "Επενδύσεις",
+  "btn50b": "Επένδυση",
+  "ariaHub": "Πίνακας",
+  "hubSalarySub": "καθαρά αυτόν τον μήνα",
+  "hubInvestSub": "τελικό υπόλοιπο",
+  "hubMotoSub": "ανά μήνα",
+  "hubHint": "\u2192 Πάτα σε μια κάρτα για λεπτομέρειες",
   "h234": "<span class=\"num\">7</span> Στοιχεία Δανείου",
   "lbl1": "Ποσό δανείου",
   "unit97": "€",
@@ -152,12 +157,12 @@ const TRANSLATIONS = {
   "legend3": "Καταθέσεις",
   "legend4": "Κέρδη",
   "note95": "Υποθετικός υπολογισμός με σταθερό ετήσιο ποσοστό απόδοσης (χωρίς διακυμάνσεις αγοράς) και τακτικές καταθέσεις. Δεν λαμβάνει υπόψη φόρους, προμήθειες διαχείρισης ή πληθωρισμό. Μια επενδυτική στρατηγική τακτικών καταθέσεων δεν εγγυάται κέρδος ούτε προστατεύει από ζημία — τα πραγματικά αποτελέσματα θα διαφέρουν.",
-  "h240": "<span class=\"num\">3</span> Αποθεματικό Διακοπών / Δραστηριοτήτων",
+  "h240": "<span class=\"num\">3</span> Αποθεματικό",
   "lbl27": "Ήδη αποταμιευμένα",
   "unit119": "€",
   "reslbl90": "Προτεινόμενη προσθήκη <span style=\"font-weight:400;\">(πλεόνασμα δώρων φέτος)</span>",
   "reslbl91": "Νέο σύνολο αν το προσθέσεις",
-  "note96": "Το αποθεματικό διακοπών λειτουργεί σαν τα δώρα/επίδομα αδείας: δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού, αλλά ένα ξεχωριστό ποσό που συσσωρεύεται από το πλεόνασμα των δώρων (αφού καλυφθούν τα πάγια έξοδα οχήματος) και μπορεί να ξοδευτεί ελεύθερα σε διακοπές, ταξίδια ή άλλες δραστηριότητες. Το \"ήδη αποταμιευμένα\" το ενημερώνετε εσείς χειροκίνητα κάθε φορά που προσθέτετε ή ξοδεύετε από αυτό.",
+  "note96": "Ένα ξεχωριστό αποθεματικό για ό,τι εσύ θέλεις — διακοπές, απρόοπτα έξοδα, ή οποιονδήποτε άλλο στόχο. Δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού· τροφοδοτείται από το πλεόνασμα των δώρων, αφού πρώτα καλυφθούν τα πάγια έξοδα οχήματος (αν υπάρχουν). Το πεδίο \"ήδη αποταμιευμένα\" το ενημερώνεις εσύ χειροκίνητα, κάθε φορά που προσθέτεις ή ξοδεύεις από αυτό.",
   "h241": "<span class=\"num\">5</span> Πάγια Έξοδα Οχήματος <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(ετήσια)</span>",
   "lbl28": "Ασφάλεια",
   "unit120": "€/έτος",
@@ -212,6 +217,11 @@ const TRANSLATIONS = {
   "btn48": "Loan",
   "btn49": "Vehicle Expenses",
   "btn50b": "Investments",
+  "ariaHub": "Dashboard",
+  "hubSalarySub": "net this month",
+  "hubInvestSub": "final balance",
+  "hubMotoSub": "per month",
+  "hubHint": "\u2192 Tap a card for details",
   "h234": "<span class=\"num\">7</span> Loan Details",
   "lbl1": "Loan Amount",
   "unit97": "€",
@@ -334,12 +344,12 @@ const TRANSLATIONS = {
   "legend3": "Contributions",
   "legend4": "Growth",
   "note95": "Hypothetical calculation with a fixed annual rate of return (no market fluctuation) and regular contributions. Does not account for taxes, management fees, or inflation. A program of regular investing does not guarantee a profit or protect against a loss -- actual results will vary.",
-  "h240": "<span class=\"num\">3</span> Vacation / Activities Fund",
+  "h240": "<span class=\"num\">3</span> Reserve Fund",
   "lbl27": "Already Saved",
   "unit119": "€",
   "reslbl90": "Suggested Addition <span style=\"font-weight:400;\">(this years bonus surplus)</span>",
   "reslbl91": "New Total If Added",
-  "note96": "The vacation fund works like the bonuses/leave allowance: it is not part of the regular monthly budget, but a separate amount that builds up from the bonus surplus (after covering fixed vehicle expenses) and can be spent freely on vacations, trips, or other activities. You update already saved manually each time you add to or spend from it.",
+  "note96": "A separate reserve for whatever you want it to be -- vacations, unexpected expenses, or any other goal. It is not part of the regular monthly budget; it is fed by the bonus surplus, after covering fixed vehicle expenses (if any). You update the \"already saved\" field manually, each time you add to or spend from it.",
   "h241": "<span class=\"num\">5</span> Fixed Vehicle Expenses <span style=\"font-weight:400;font-size:11px;color:var(--ink-soft);\">(annual)</span>",
   "lbl28": "Insurance",
   "unit120": "€/yr",
@@ -376,6 +386,10 @@ function applyStaticTranslations(){
   document.querySelectorAll('[data-i18n-ph]').forEach(el => {
     const key = el.getAttribute('data-i18n-ph');
     if(dict[key] !== undefined) el.placeholder = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const key = el.getAttribute('data-i18n-aria');
+    if(dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
   });
   document.documentElement.lang = currentLang;
   document.title = currentLang === 'en' ? 'Personal Finance Dashboard — Net Salary, Loan & Budget Calculator' : 'Οικονομικός Πίνακας Ελέγχου — Υπολογισμός Καθαρού Μισθού, Δανείου & Προϋπολογισμού';
@@ -668,14 +682,16 @@ const tabButtons = {
   moto: document.getElementById('tabBtnMoto'),
   salary: document.getElementById('tabBtnSalary'),
   budget: document.getElementById('tabBtnBudget'),
-  invest: document.getElementById('tabBtnInvest')
+  invest: document.getElementById('tabBtnInvest'),
+  hub: document.getElementById('tabBtnHub')
 };
 const tabPanels = {
   loan: document.getElementById('tabLoan'),
   moto: document.getElementById('tabMoto'),
   salary: document.getElementById('tabSalary'),
   budget: document.getElementById('tabBudget'),
-  invest: document.getElementById('tabInvest')
+  invest: document.getElementById('tabInvest'),
+  hub: document.getElementById('tabHub')
 };
 function showTab(name){
   Object.keys(tabPanels).forEach(key=>{
@@ -685,12 +701,28 @@ function showTab(name){
   if(name==='salary') recomputeSalary();
   if(name==='budget') recomputeBudget();
   if(name==='invest') recomputeInvestment();
+  if(name==='hub') updateHubCards();
+
+  const summaryBar = document.getElementById('summaryBar');
+  if(summaryBar) summaryBar.style.display = (name==='hub') ? 'none' : 'flex';
 }
 tabButtons.loan.addEventListener('click', ()=>showTab('loan'));
 tabButtons.moto.addEventListener('click', ()=>showTab('moto'));
 tabButtons.salary.addEventListener('click', ()=>showTab('salary'));
 tabButtons.budget.addEventListener('click', ()=>showTab('budget'));
 tabButtons.invest.addEventListener('click', ()=>showTab('invest'));
+tabButtons.hub.addEventListener('click', ()=>showTab('hub'));
+
+document.querySelectorAll('.hub-card').forEach(card=>{
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  const go = () => showTab(card.dataset.target);
+  card.addEventListener('click', go);
+  card.addEventListener('keydown', e=>{
+    if(e.key==='Enter' || e.key===' '){ e.preventDefault(); go(); }
+  });
+});
+
 
 document.getElementById('clearLoanBtn').addEventListener('click', ()=>{
   document.getElementById('amount').value = '';
@@ -700,6 +732,7 @@ document.getElementById('clearLoanBtn').addEventListener('click', ()=>{
 });
 
 let lastMonthlyPayment = 0;
+let lastPureVehicleCost = 0;
 let lastNetSalary = 0;
 let lastAvgBonusEquiv = 0;
 let lastExtraNet = 0;
@@ -721,6 +754,7 @@ function recomputeBudget(){
   const variableMonthly = fuel+parking+other;
 
   const motoTotal = lastMonthlyPayment + fixedMonthlyEquiv + variableMonthly;
+  lastPureVehicleCost = fixedMonthlyEquiv + variableMonthly;
 
   document.getElementById('fMotoLoan').textContent = euroDec(lastMonthlyPayment);
   document.getElementById('fMotoFixed').textContent = euroDec(fixedMonthlyEquiv);
@@ -891,6 +925,59 @@ function recomputeBudget(){
   ).join('');
 
   updateSummaryBar(hasLoan, income, remainNoBonus, remaining, afterSavingsAmount);
+  updateHubCards();
+}
+
+function updateHubCards(){
+  document.getElementById('hubSalaryValue').textContent = document.getElementById('sumNetSalary').textContent;
+
+  const sumBadge = document.getElementById('sumStatusBadge');
+  const hubBudgetBadge = document.getElementById('hubBudgetBadge');
+  hubBudgetBadge.textContent = sumBadge.textContent;
+  hubBudgetBadge.className = 'hub-card-badge';
+  if(sumBadge.classList.contains('risk')) hubBudgetBadge.classList.add('warn');
+  if(sumBadge.classList.contains('deficit')) hubBudgetBadge.classList.add('over');
+
+  const remainingText = document.getElementById('sumRemaining').textContent;
+  document.getElementById('hubBudgetSub').textContent = currentLang==='en'
+    ? remainingText + ' available'
+    : remainingText + ' διαθέσιμο';
+
+  document.getElementById('hubInvestValue').textContent = document.getElementById('invFinalBalance').textContent;
+  document.getElementById('hubMotoValue').textContent = euroDec(lastPureVehicleCost);
+
+  const invContribution = parseFloat(document.getElementById('invContribution').value)||0;
+  const invYears = document.getElementById('invYears').value;
+  const invRate = document.getElementById('invRate').value;
+  const freqLabels = { '12': currentLang==='en' ? '/mo' : '/μήνα', '4': currentLang==='en' ? '/qtr' : '/τρίμηνο', '1': currentLang==='en' ? '/yr' : '/έτος' };
+  const freqSuffix = freqLabels[document.getElementById('invContribFreq').value] || '';
+  const yearsWord = currentLang==='en' ? (invYears==1 ? 'yr' : 'yrs') : (invYears==1 ? 'έτος' : 'χρόνια');
+  document.getElementById('hubInvestDetail').textContent =
+    `${Math.round(invContribution)}€${freqSuffix} \u00b7 ${invYears} ${yearsWord} \u00b7 ${invRate}%`;
+
+  const hasLoan = document.getElementById('sumLoanItem').style.display !== 'none';
+  const hubLoanBadge = document.getElementById('hubLoanBadge');
+  if(hasLoan){
+    const suffix = currentLang==='en' ? '/mo' : '/μήνα';
+    document.getElementById('hubLoanValue').textContent = document.getElementById('sumLoan').textContent + suffix;
+    const dtiBadge = document.getElementById('dtiBadge');
+    hubLoanBadge.textContent = dtiBadge.textContent;
+    hubLoanBadge.className = 'hub-card-badge';
+    if(dtiBadge.classList.contains('warn')) hubLoanBadge.classList.add('warn');
+    if(dtiBadge.classList.contains('over')) hubLoanBadge.classList.add('over');
+    hubLoanBadge.style.display = 'inline-block';
+
+    const amount = parseFloat(document.getElementById('amount').value)||0;
+    const installments = document.getElementById('installments').value;
+    const rate = document.getElementById('rate').value;
+    const instWord = currentLang==='en' ? 'installments' : 'δόσεις';
+    document.getElementById('hubLoanDetail').textContent =
+      `${euro(amount)} \u00b7 ${installments} ${instWord} \u00b7 ${rate}%`;
+  } else {
+    document.getElementById('hubLoanValue').textContent = currentLang==='en' ? 'No active loan' : 'Χωρίς ενεργό δάνειο';
+    document.getElementById('hubLoanDetail').textContent = '';
+    hubLoanBadge.style.display = 'none';
+  }
 }
 
 function updateSummaryBar(hasLoan, income, remainNoBonus, remaining, afterSavingsAmount){
@@ -905,30 +992,27 @@ function updateSummaryBar(hasLoan, income, remainNoBonus, remaining, afterSaving
   }
 
   const savingsItem = document.getElementById('sumSavingsItem');
-  const afterSavingsItem = document.getElementById('sumAfterSavingsItem');
   if(afterSavingsAmount !== null){
     document.getElementById('sumSavings').textContent = euroDec(lastSavingsSuggestion);
-    document.getElementById('sumAfterSavings').textContent = euroDec(afterSavingsAmount);
     savingsItem.style.display = 'flex';
-    afterSavingsItem.style.display = 'flex';
   } else {
     savingsItem.style.display = 'none';
-    afterSavingsItem.style.display = 'none';
   }
 
-  document.getElementById('sumRemaining').textContent = euroDec(remaining);
+  const displayedBalance = afterSavingsAmount !== null ? afterSavingsAmount : remaining;
+  document.getElementById('sumRemaining').textContent = euroDec(displayedBalance);
 
   const ratio = income > 0 ? remainNoBonus/income : (remainNoBonus < 0 ? -1 : 0);
   const badge = document.getElementById('sumStatusBadge');
   badge.classList.remove('surplus','risk','deficit');
   if(remainNoBonus < 0){
-    badge.textContent = currentLang==='en' ? 'Deficit' : 'Έλλειμμα';
+    badge.textContent = currentLang==='en' ? 'Insufficient' : 'Ανεπαρκές';
     badge.classList.add('deficit');
   } else if(ratio < 0.10){
-    badge.textContent = currentLang==='en' ? 'Risk' : 'Κίνδυνος';
+    badge.textContent = currentLang==='en' ? 'Marginal' : 'Οριακό';
     badge.classList.add('risk');
   } else {
-    badge.textContent = currentLang==='en' ? 'Surplus' : 'Πλεόνασμα';
+    badge.textContent = currentLang==='en' ? 'Sufficient' : 'Επαρκές';
     badge.classList.add('surplus');
   }
 }
@@ -1217,6 +1301,7 @@ document.getElementById('invContribResyncBtn').addEventListener('click', ()=>{
 recompute();
 recomputeSalary();
 recomputeInvestment();
+showTab('hub');
 
 // --- Export / Import data (Excel .xlsx via SheetJS) ---
 const EXPORT_FIELD_IDS = [
@@ -1279,7 +1364,7 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
     <table>
       <tr><td>${pt('Πάγια έξοδα οχήματος (ισοδύναμο/μήνα)','Fixed Vehicle Expenses (monthly equiv.)')}</td><td>${txt('fMotoFixed')}</td></tr>
       <tr><td>${pt('Λειτουργικά έξοδα οχήματος/μήνα','Operating Vehicle Expenses/month')}</td><td>${txt('fMotoVar')}</td></tr>
-      <tr><td><strong>${pt('Συνολικό μηνιαίο κόστος οχήματος','Total Monthly Vehicle Cost')}</strong></td><td><strong>${txt('fMotoTotal')}</strong></td></tr>
+      <tr><td><strong>${pt('Συνολικό μηνιαίο κόστος οχήματος','Total Monthly Vehicle Cost')}</strong></td><td><strong>${euroDec(lastPureVehicleCost)}</strong></td></tr>
     </table>
 
     <h2>${pt('Προϋπολογισμός','Budget')}</h2>
@@ -1293,9 +1378,9 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
       <tr><td><strong>${pt('Προτεινόμενη αποταμίευση','Suggested Savings')}</strong></td><td><strong>${txt('fSavingsAmount')}</strong></td></tr>
       <tr><td>${pt('Υπόλοιπο (μετά την αποταμίευση)','Balance (after savings)')}</td><td>${txt('fAfterSavings')}</td></tr>
       ` : ''}
-      <tr><td>${pt('Αποθεματικό διακοπών - Ήδη αποταμιευμένα','Vacation Fund - Already Saved')}</td><td>${val('vacationSaved')} €</td></tr>
-      <tr><td>${pt('Αποθεματικό διακοπών - Προτεινόμενη προσθήκη','Vacation Fund - Suggested Addition')}</td><td>${txt('vacationSuggestedAdd')}</td></tr>
-      <tr><td>${pt('Αποθεματικό διακοπών - Νέο σύνολο','Vacation Fund - New Total')}</td><td>${txt('vacationNewTotal')}</td></tr>
+      <tr><td>${pt('Αποθεματικό - Ήδη αποταμιευμένα','Reserve Fund - Already Saved')}</td><td>${val('vacationSaved')} €</td></tr>
+      <tr><td>${pt('Αποθεματικό - Προτεινόμενη προσθήκη','Reserve Fund - Suggested Addition')}</td><td>${txt('vacationSuggestedAdd')}</td></tr>
+      <tr><td>${pt('Αποθεματικό - Νέο σύνολο','Reserve Fund - New Total')}</td><td>${txt('vacationNewTotal')}</td></tr>
     </table>
   `;
 

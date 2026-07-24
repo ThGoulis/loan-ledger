@@ -83,19 +83,20 @@
     </div>
     <div class="summary-item">
       <span class="summary-label" data-i18n="sumlbl4">Διαθέσιμο υπόλοιπο</span>
-      <span class="summary-value" id="sumRemaining">—</span>
+      <span class="summary-value-row">
+        <span class="summary-value" id="sumRemaining">—</span>
+        <span class="summary-status-pill" id="sumStatusBadge">—</span>
+      </span>
     </div>
-    <div class="summary-item" id="sumAfterSavingsItem" style="display:none;">
-      <span class="summary-label" data-i18n="sumlbl5">Υπόλοιπο μετά την αποταμίευση</span>
-      <span class="summary-value" id="sumAfterSavings">—</span>
-    </div>
-    <div class="summary-badge" id="sumStatusBadge">—</div>
   </div>
 
   <div class="tab-nav">
-    <button id="tabBtnSalary" class="tab-btn active" data-i18n="btn46">Μισθός & Δώρα</button>
-    <button id="tabBtnBudget" class="tab-btn" data-i18n="btn47">Προϋπολογισμός</button>
-    <button id="tabBtnInvest" class="tab-btn" data-i18n="btn50b">Επενδύσεις</button>
+    <button id="tabBtnHub" class="tab-btn active tab-btn-icon" data-i18n-aria="ariaHub" aria-label="Πίνακας">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10.5V20h12v-9.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="tabBtnSalary" class="tab-btn" data-i18n="btn46">Μισθός & Δώρα</button>
+    <button id="tabBtnBudget" class="tab-btn" data-i18n="btn47">Μπάτζετ</button>
+    <button id="tabBtnInvest" class="tab-btn" data-i18n="btn50b">Επένδυση</button>
     <button id="tabBtnMoto" class="tab-btn" data-i18n="btn49">Έξοδα Οχήματος</button>
     <button id="tabBtnLoan" class="tab-btn" data-i18n="btn48">Δάνειο</button>
   </div>
@@ -262,7 +263,56 @@
   </div>
   <!-- /tabLoan -->
 
-  <div id="tabSalary">
+  <div id="tabHub">
+    <div class="hub-grid">
+
+      <div class="hub-card" id="hubCardSalary" data-target="salary">
+        <svg class="hub-card-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="14.2" r="1.3" fill="currentColor"/></svg>
+        <div class="hub-card-label" data-i18n="btn46">Μισθός & Δώρα</div>
+        <div class="hub-card-value" id="hubSalaryValue">—</div>
+        <div class="hub-card-sub" data-i18n="hubSalarySub">καθαρά αυτόν τον μήνα</div>
+      </div>
+
+      <div class="hub-card" id="hubCardBudget" data-target="budget">
+        <svg class="hub-card-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 4v8l6 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <div class="hub-card-label" data-i18n="btn47">Μπάτζετ</div>
+        <div class="hub-card-badge" id="hubBudgetBadge">—</div>
+        <div class="hub-card-sub" id="hubBudgetSub">—</div>
+      </div>
+
+      <div class="hub-card" id="hubCardInvest" data-target="invest">
+        <svg class="hub-card-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M3 17l5-6 4 3 6-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 6h4v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="hub-card-label" data-i18n="btn50b">Επένδυση</div>
+        <div class="hub-card-detail" id="hubInvestDetail">—</div>
+        <div class="hub-card-value" id="hubInvestValue">—</div>
+        <div class="hub-card-sub" data-i18n="hubInvestSub">τελικό υπόλοιπο</div>
+      </div>
+
+      <div class="hub-card" id="hubCardMoto" data-target="moto">
+        <svg class="hub-card-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M4 16v-3l2-4h12l2 4v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><rect x="3" y="16" width="18" height="3" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="19" r="1.3" fill="currentColor"/><circle cx="16.5" cy="19" r="1.3" fill="currentColor"/></svg>
+        <div class="hub-card-label" data-i18n="btn49">Έξοδα Οχήματος</div>
+        <div class="hub-card-value" id="hubMotoValue">—</div>
+        <div class="hub-card-sub" data-i18n="hubMotoSub">ανά μήνα</div>
+      </div>
+
+      <div class="hub-card hub-card-wide" id="hubCardLoan" data-target="loan">
+        <div class="hub-card-wide-left">
+          <svg class="hub-card-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M4 10 12 4l8 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><rect x="4" y="10" width="16" height="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 18h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div>
+            <div class="hub-card-label" data-i18n="btn48">Δάνειο</div>
+            <div class="hub-card-detail" id="hubLoanDetail">—</div>
+            <div class="hub-card-value" id="hubLoanValue">—</div>
+          </div>
+        </div>
+        <div class="hub-card-badge" id="hubLoanBadge" style="display:none;">—</div>
+      </div>
+
+    </div>
+    <div class="hub-hint" data-i18n="hubHint">→ Πάτα σε μια κάρτα για λεπτομέρειες</div>
+  </div>
+  <!-- /tabHub -->
+
+  <div id="tabSalary" style="display:none;">
 
     <div class="card" style="margin-bottom:22px;">
       <h2 data-i18n="h237"><span class="num">1</span> Μισθός & Δώρα <span style="font-weight:400;font-size:11px;color:var(--ink-soft);">(σύστημα 14 μισθών)</span></h2>
@@ -494,7 +544,7 @@
 
 
     <div class="card">
-      <h2 data-i18n="h240"><span class="num">3</span> Αποθεματικό Διακοπών / Δραστηριοτήτων</h2>
+      <h2 data-i18n="h240"><span class="num">3</span> Αποθεματικό</h2>
 
       <div class="field">
         <label for="vacationSaved" data-i18n="lbl27">Ήδη αποταμιευμένα</label>
@@ -515,7 +565,7 @@
         </div>
       </div>
     </div>
-    <div class="note" data-i18n="note96">Το αποθεματικό διακοπών λειτουργεί σαν τα δώρα/επίδομα αδείας: δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού, αλλά ένα ξεχωριστό ποσό που συσσωρεύεται από το πλεόνασμα των δώρων (αφού καλυφθούν τα πάγια έξοδα οχήματος) και μπορεί να ξοδευτεί ελεύθερα σε διακοπές, ταξίδια ή άλλες δραστηριότητες. Το "ήδη αποταμιευμένα" το ενημερώνετε εσείς χειροκίνητα κάθε φορά που προσθέτετε ή ξοδεύετε από αυτό.</div>
+    <div class="note" data-i18n="note96">Ένα ξεχωριστό αποθεματικό για ό,τι εσύ θέλεις — διακοπές, απρόοπτα έξοδα, ή οποιονδήποτε άλλο στόχο. Δεν είναι μέρος του τακτικού μηνιαίου προϋπολογισμού· τροφοδοτείται από το πλεόνασμα των δώρων, αφού πρώτα καλυφθούν τα πάγια έξοδα οχήματος (αν υπάρχουν). Το πεδίο "ήδη αποταμιευμένα" το ενημερώνεις εσύ χειροκίνητα, κάθε φορά που προσθέτεις ή ξοδεύεις από αυτό.</div>
   </div>
   <!-- /tabBudget -->
 
